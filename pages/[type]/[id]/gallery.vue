@@ -107,12 +107,6 @@ const props = defineProps({
       return {}
     },
   },
-  currentMember: {
-    type: Object,
-    default() {
-      return null
-    },
-  },
 })
 
 const title = `${props.project.title} - Gallery`

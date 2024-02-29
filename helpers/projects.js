@@ -1,72 +1,10 @@
 import dayjs from 'dayjs'
 
-export const getProjectTypeForUrl = (type, categories, overrideTags) => {
-  const tags = overrideTags ?? useTags().value
-
-  if (type === 'mod') {
-    const isMod = categories.some((category) => {
-      return tags.loaderData.modLoaders.includes(category)
-    })
-
-    const isPlugin = categories.some((category) => {
-      return tags.loaderData.allPluginLoaders.includes(category)
-    })
-
-    const isDataPack = categories.some((category) => {
-      return tags.loaderData.dataPackLoaders.includes(category)
-    })
-
-    if (isDataPack) {
-      return 'datapack'
-    } else if (isPlugin) {
-      return 'plugin'
-    } else if (isMod) {
-      return 'mod'
-    } else {
-      return 'mod'
-    }
-  } else {
-    return type
-  }
-}
-
-export const getProjectTypeForDisplay = (type, categories, overrideTags) => {
-  const tags = overrideTags ?? useTags().value
-
-  if (type === 'mod') {
-    const isPlugin = categories.some((category) => {
-      return tags.loaderData.allPluginLoaders.includes(category)
-    })
-    const isMod = categories.some((category) => {
-      return tags.loaderData.modLoaders.includes(category)
-    })
-    const isDataPack = categories.some((category) => {
-      return tags.loaderData.dataPackLoaders.includes(category)
-    })
-
-    if (isMod && isPlugin && isDataPack) {
-      return 'mod, plugin, and data pack'
-    } else if (isMod && isPlugin) {
-      return 'mod and plugin'
-    } else if (isMod && isDataPack) {
-      return 'mod and data pack'
-    } else if (isPlugin && isDataPack) {
-      return 'plugin and data pack'
-    } else if (isDataPack) {
-      return 'data pack'
-    } else if (isPlugin) {
-      return 'plugin'
-    }
-  }
-
-  return type
-}
-
 /*
   Only use on the complete list of versions for a project, partial lists will generate
   the wrong version slugs
 */
-export const computeVersions = (versions, members) => {
+export const computeVersions = (versions) => {
   const visitedVersions = []
   const returnVersions = []
 

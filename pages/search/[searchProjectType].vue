@@ -6,11 +6,11 @@
     }"
   >
     <Head>
-      <Title>Search {{ projectType.display }}s - Modrinth</Title>
+      <Title>Search mods - Modrinth</Title>
     </Head>
     <section class="normal-page__header">
-      <GameBanner game="minecraft_java" />
-      <h1 class="type-header">{{ formatProjectType(projectType.display) }}s</h1>
+      <GameBanner game="minecraft_java"/>
+      <h1 class="type-header">Mods</h1>
       <PageBar class="filter-row">
         <span class="page-bar__title">Sort by</span>
         <div class="sort-by-desktop">
@@ -26,12 +26,10 @@
               }
             "
           >
-            <TopIcon v-if="sortMode.id === 'relevance'" aria-hidden="true" />
-            <NewIcon v-else-if="sortMode.id === 'newest'" aria-hidden="true" />
-            <HistoryIcon v-else-if="sortMode.id === 'updated'" aria-hidden="true" />
-            <HeartIcon v-else-if="sortMode.id === 'follows'" aria-hidden="true" />
-            <DownloadIcon v-else-if="sortMode.id === 'downloads'" aria-hidden="true" />
-            <UnknownIcon v-else aria-hidden="true" />
+            <TopIcon v-if="sortMode.id === 'relevance'" aria-hidden="true"/>
+            <NewIcon v-else-if="sortMode.id === 'newest'" aria-hidden="true"/>
+            <HistoryIcon v-else-if="sortMode.id === 'updated'" aria-hidden="true"/>
+            <UnknownIcon v-else aria-hidden="true"/>
             {{ sortTypeDisplayNames[sortMode.id] }}
           </button>
         </div>
@@ -54,21 +52,25 @@
                 })
             "
           >
-            <TopIcon v-if="sortType === 'relevance'" aria-hidden="true" />
-            <NewIcon v-else-if="sortType === 'newest'" aria-hidden="true" />
-            <HistoryIcon v-else-if="sortType === 'updated'" aria-hidden="true" />
-            <HeartIcon v-else-if="sortType === 'follows'" aria-hidden="true" />
-            <DownloadIcon v-else-if="sortType === 'downloads'" aria-hidden="true" />
-            <UnknownIcon v-else aria-hidden="true" />
-            {{ sortTypeDisplayNames[sortType] }} <DropdownIcon />
+            <TopIcon v-if="sortType === 'relevance'" aria-hidden="true"/>
+            <NewIcon v-else-if="sortType === 'newest'" aria-hidden="true"/>
+            <HistoryIcon v-else-if="sortType === 'updated'" aria-hidden="true"/>
+            <HeartIcon v-else-if="sortType === 'follows'" aria-hidden="true"/>
+            <DownloadIcon v-else-if="sortType === 'downloads'" aria-hidden="true"/>
+            <UnknownIcon v-else aria-hidden="true"/>
+            {{ sortTypeDisplayNames[sortType] }}
+            <DropdownIcon/>
             <template #relevance>
-              <TopIcon aria-hidden="true" /> Top
+              <TopIcon aria-hidden="true"/>
+              Top
             </template>
             <template #newest>
-              <NewIcon aria-hidden="true" /> New
+              <NewIcon aria-hidden="true"/>
+              New
             </template>
             <template #updated>
-              <HistoryIcon aria-hidden="true" /> Updated Recently
+              <HistoryIcon aria-hidden="true"/>
+              Updated Recently
             </template>
           </OverflowMenu>
         </div>
@@ -84,7 +86,7 @@
               }"
               @click="setSearchDisplayMode('list')"
             >
-              <ListIcon />
+              <ListIcon/>
             </button>
             <button
               v-tooltip="`Grid`"
@@ -95,7 +97,7 @@
               }"
               @click="setSearchDisplayMode('grid')"
             >
-              <GridIcon />
+              <GridIcon/>
             </button>
           </div>
         </template>
@@ -109,123 +111,35 @@
       aria-label="Filters"
     >
       <section class="card filters-card">
-        <h2>Filters</h2>
-        <div class="filters-search-row">
-          <div class="iconified-input">
-            <label class="hidden" for="search">Search</label>
-            <SearchIcon aria-hidden="true" />
-            <input
-              id="search"
-              v-model="filterQuery"
-              type="text"
-              name="search"
-              :placeholder="`Search filters...`"
-              autocomplete="off"
-              @input="onSearchChange(1)"
-            />
-            <Button v-if="filterQuery" class="r-btn" @click="() => (filterQuery = '')">
-              <XIcon />
-            </Button>
-          </div>
-          <button
-            v-if="hasFiltersEnabled"
-            v-tooltip="`Reset filters`"
-            class="btn icon-only"
-            @click="clearFilters"
-          >
-            <FilterXIcon />
-          </button>
-        </div>
+        <h2>Site Statistics</h2>
         <div class="filter-section expanded">
-          <h3 class="heading">Environment</h3>
           <div class="content-wrapper">
             <div class="content">
-              <SearchFilter
-                v-if="isFilterShown('client')"
-                :active-filters="selectedEnvironments"
-                display-name="Client"
-                facet-name="client"
-                @toggle="toggleEnv"
-              />
-              <SearchFilter
-                v-if="isFilterShown('server')"
-                :active-filters="selectedEnvironments"
-                display-name="Server"
-                facet-name="server"
-                @toggle="toggleEnv"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          v-if="primaryLoaders.length + secondaryLoaders.length > 1"
-          class="filter-section expanded"
-        >
-          <h3 class="heading">Platform</h3>
-          <div class="content-wrapper">
-            <div class="content">
-              <SearchFilter
-                v-for="loader in primaryLoaders.filter((x) =>
-                  isFilterShown(formatCategory(x.name))
-                )"
-                :key="loader.name"
-                ref="loaderFilters"
-                :active-filters="orFacets"
-                :display-name="formatCategory(loader.name)"
-                :facet-name="`categories:'${encodeURIComponent(loader.name)}'`"
-                @toggle="toggleOrFacet"
-              />
-              <template
-                v-if="
-                  (showAllLoaders && secondaryLoaders.length > 0) ||
-                  (filterQuery &&
-                    secondaryLoaders.filter((x) => isFilterShown(formatCategory(x.name))))
-                "
-              >
-                <SearchFilter
-                  v-for="loader in secondaryLoaders.filter((x) =>
-                    isFilterShown(formatCategory(x.name))
-                  )"
-                  :key="loader.name"
-                  ref="loaderFilters"
-                  :active-filters="orFacets"
-                  :display-name="formatCategory(loader.name)"
-                  :facet-name="`categories:'${encodeURIComponent(loader.name)}'`"
-                  @toggle="toggleOrFacet"
-                />
-              </template>
-              <ListSelector
-                v-if="secondaryLoaders.length > 0 && !filterQuery"
-                v-model="showAllLoaders"
-                no-active-state
-                class="see-more"
-              >
-                {{ showAllLoaders ? 'See fewer' : 'See more' }}
-              </ListSelector>
-            </div>
-          </div>
-        </div>
-        <div class="filter-section expanded">
-          <h3 class="heading">Version</h3>
-          <div class="content-wrapper">
-            <div class="content">
-              <ScrollableMultiSelect>
-                <ListSelector
-                  v-for="(version, index) in filterQuery
-                    ? tags.gameVersions.filter((x) => isFilterShown(x.version))
-                    : showSnapshots
-                    ? tags.gameVersions
-                    : tags.gameVersions.filter((it) => it.version_type === 'release')"
-                  :key="`filter-version-${index}`"
-                  :model-value="selectedVersions.includes(version)"
-                >
-                  {{ version.version }}
-                </ListSelector>
-              </ScrollableMultiSelect>
-              <div v-if="!filterQuery" class="toggle-option">
-                <label for="show-all-versions"> Show pre-release versions </label>
-                <Toggle id="show-all-versions" v-model="showSnapshots" :checked="showSnapshots" />
-              </div>
+              <span class="statistic-line">
+                <DownloadIcon/>
+                <strong>{{ formatNumber(statistics?.downloads || 0) }}</strong>
+                 Downloads
+              </span>
+              <span class="statistic-line">
+                <HeartIcon/>
+                <strong>{{ formatNumber(statistics?.followers || 0) }}</strong>
+                 Followers
+              </span>
+              <span class="statistic-line">
+                <FileIcon/>
+                <strong>{{ formatNumber(statistics?.files || 0) }}</strong>
+                 Files
+              </span>
+              <span class="statistic-line">
+                <ScaleIcon/>
+                <strong>{{ formatNumber(statistics?.size || 0) }}</strong>
+                 Storage
+              </span>
+              <span class="statistic-line">
+                <BoxIcon/>
+                <strong>{{ formatNumber(statistics?.projects || 0) }}</strong>
+                 Projects
+              </span>
             </div>
           </div>
         </div>
@@ -235,40 +149,36 @@
       <div class="search-row">
         <div class="iconified-input">
           <label class="hidden" for="search">Search</label>
-          <SearchIcon aria-hidden="true" />
+          <SearchIcon aria-hidden="true"/>
           <input
             id="search"
             v-model="query"
             type="text"
             name="search"
-            :placeholder="`Search ${projectType.display}s...`"
+            :placeholder="`Search mods...`"
             autocomplete="off"
             @input="onSearchChange(1)"
           />
           <Button v-if="query" class="r-btn" @click="() => (query = '')">
-            <XIcon />
+            <XIcon/>
           </Button>
         </div>
         <Pagination
           :page="currentPage"
           :count="pageCount"
-          :link-function="(x) => getSearchUrl(x <= 1 ? 0 : (x - 1) * maxResults)"
+          :link-function="(x) => getSearchUrl(x <= 1 ? 0 : (x - 1) * 20)"
           @switch-page="onSearchChange"
         />
       </div>
-      <AnimatedLogo v-if="searchLoading && !noLoad" />
+      <AnimatedLogo v-if="searchLoading && !noLoad"/>
       <div
         v-else-if="
           results && results.hits && results.hits.length === 0 && (!searchLoading || noLoad)
         "
         class="no-results"
       >
-        <FrownIcon />
-        <p v-if="query && hasFiltersEnabled">
-          We couldn't find any results matching "{{ query }}" with your filters.
-        </p>
-        <p v-else-if="query">We couldn't find any results matching "{{ query }}"</p>
-        <p v-else-if="hasFiltersEnabled">We couldn't find any results matching your filters.</p>
+        <FrownIcon/>
+        <p v-if="query">We couldn't find any results matching "{{ query }}"</p>
         <p v-else>We couldn't find any results.</p>
       </div>
       <div v-else class="search-results-container">
@@ -286,24 +196,24 @@
         >
           <ProjectCard
             v-for="result in results?.hits"
-            :id="result.slug ? result.slug : result.project_id"
-            :key="result.project_id"
+            :id="result.slug"
+            :key="result.slug"
             :display="cosmetics.searchDisplayMode[projectType.id]"
             :featured-image="result.featured_gallery ? result.featured_gallery : result.gallery[0]"
-            :type="getProjectTypeForUrl(result.project_type, result.categories)"
+            type="mod"
             :author="result.author"
             :name="result.title"
             :description="result.description"
-            :created-at="result.date_created"
-            :updated-at="result.date_modified"
+            :created-at="result.published"
+            :updated-at="result.updated"
             :downloads="result.downloads.toString()"
-            :follows="result.follows.toString()"
+            :follows="result.followers.toString()"
             :icon-url="result.icon_url"
             :client-side="result.client_side"
             :server-side="result.server_side"
             :search="true"
             :show-updated-date="sortType !== 'newest'"
-            :hide-loaders="['resourcepack', 'datapack'].includes(projectType.id)"
+            :hide-loaders="true"
             :color="result.color"
             :from-now="fromNow"
           />
@@ -313,7 +223,7 @@
         <Pagination
           :page="currentPage"
           :count="pageCount"
-          :link-function="(x) => getSearchUrl(x <= 1 ? 0 : (x - 1) * maxResults)"
+          :link-function="(x) => getSearchUrl(x <= 1 ? 0 : (x - 1) * MAX_RESULTS)"
           @switch-page="onSearchChangeToTop"
         />
       </div>
@@ -323,36 +233,32 @@
 <script setup>
 import {
   AnimatedLogo,
+  BoxIcon,
   Button,
   DownloadIcon,
   DropdownIcon,
-  DropdownSelect,
-  formatCategory,
-  formatCategoryHeader,
-  formatProjectType,
+  FileIcon,
+  formatNumber,
   GridIcon,
   HeartIcon,
   HistoryIcon,
   ListIcon,
-  ListSelector,
   OverflowMenu,
   PageBar,
   Pagination,
   ProjectCard,
-  ScrollableMultiSelect,
-  SearchFilter,
+  ScaleIcon,
   SearchIcon,
-  Toggle,
   UnknownIcon,
   XIcon,
 } from 'omorphia'
 
 import TopIcon from 'assets/images/utils/arrow-big-up-dash.svg'
 import NewIcon from 'assets/images/utils/burst.svg'
-import {getProjectTypeForUrl} from '~/helpers/projects.js'
 import FrownIcon from '~/assets/images/utils/frown.svg'
-import FilterXIcon from '~/assets/images/utils/filter-x.svg'
 import GameBanner from '~/components/ui/GameBanner.vue'
+
+const MAX_RESULTS = 20
 
 const sortTypeDisplayNames = {
   relevance: 'Top',
@@ -363,52 +269,27 @@ const sortTypeDisplayNames = {
 }
 
 const sidebarMenuOpen = ref(false)
-const showAllLoaders = ref(false)
-
 const route = useRoute()
-
 const cosmetics = useCosmetics()
-const tags = useTags()
-
 const query = ref('')
-const filterQuery = ref('')
-const facets = ref([])
-const orFacets = ref([])
-const selectedVersions = ref([])
-const onlyOpenSource = ref(false)
-const showSnapshots = ref(false)
-const selectedEnvironments = ref([])
 
 const sortModes = shallowReadonly([
-  { id: 'relevance', featured: true },
-  { id: 'newest', featured: true },
-  { id: 'updated', featured: true },
-  { id: 'follows' },
-  { id: 'downloads' },
+  {id: 'relevance', featured: true},
+  {id: 'newest', featured: true},
+  {id: 'updated', featured: true},
 ])
 
 const sortType = ref('relevance')
-const maxResults = ref(20)
 const currentPage = ref(1)
-const projectType = ref({ id: 'mod', display: 'mod', actual: 'mod' })
+const projectType = ref({id: 'mod', display: 'mod', actual: 'mod'})
 
 const ogTitle = computed(
-  () => `Search ${projectType.value.display}s${query.value ? ' | ' + query.value : ''}`
+  () => `Search mods${query.value ? ' | ' + query.value : ''}`
 )
-
-const hasFiltersEnabled = computed(() => {
-  return (
-    onlyOpenSource.value ||
-    selectedEnvironments.value.length > 0 ||
-    selectedVersions.value.length > 0 ||
-    facets.value.length > 0 ||
-    orFacets.value.length > 0
-  )
-})
 
 const description = computed(
   () =>
-    `Search and browse thousands of Minecraft ${projectType.value.display}s on Modrinth with instant, accurate search results. Our filters help you quickly find the best Minecraft ${projectType.value.display}s.`
+    `Search and browse thousands of Minecraft mods on Modrinth with instant, accurate search results. Our filters help you quickly find the best Minecraft ${projectType.value.display}s.`
 )
 
 useSeoMeta({
@@ -420,38 +301,13 @@ useSeoMeta({
 if (route.query.q) {
   query.value = route.query.q
 }
-if (route.query.f) {
-  facets.value = getArrayOrString(route.query.f)
-}
-if (route.query.g) {
-  orFacets.value = getArrayOrString(route.query.g)
-}
-if (route.query.v) {
-  selectedVersions.value = getArrayOrString(route.query.v)
-}
-if (route.query.l) {
-  onlyOpenSource.value = route.query.l === 'true'
-}
-if (route.query.h) {
-  showSnapshots.value = route.query.h === 'true'
-}
-if (route.query.e) {
-  selectedEnvironments.value = getArrayOrString(route.query.e)
-}
 if (route.query.s) {
   sortType.value = route.query.s
 }
 
-if (route.query.m) {
-  maxResults.value = route.query.m
-}
 if (route.query.o) {
-  currentPage.value = Math.ceil(route.query.o / maxResults.value) + 1
+  currentPage.value = Math.ceil(route.query.o / MAX_RESULTS) + 1
 }
-
-projectType.value = tags.value.projectTypes.find(
-  (x) => x.id === route.path.substring(1, route.path.length - 1)
-)
 
 const noLoad = ref(false)
 const {
@@ -460,89 +316,13 @@ const {
   pending: searchLoading,
 } = useLazyFetch(
   () => {
-    const config = useRuntimeConfig()
-    const base = process.server ? config.apiBaseUrl : config.public.apiBaseUrl
-
-    const params = [`limit=${maxResults.value}`, `index=${sortType.value}`]
+    const params = [`index=${sortType.value}`]
 
     if (query.value.length > 0) {
       params.push(`query=${encodeURIComponent(query.value.replace(/ /g, '+'))}`)
     }
 
-    if (
-      facets.value.length > 0 ||
-      orFacets.value.length > 0 ||
-      selectedVersions.value.length > 0 ||
-      selectedEnvironments.value.length > 0 ||
-      projectType.value
-    ) {
-      let formattedFacets = []
-      for (const facet of facets.value) {
-        formattedFacets.push([facet])
-      }
-
-      // loaders specifier
-      if (orFacets.value.length > 0) {
-        formattedFacets.push(orFacets.value)
-      } else if (projectType.value.id === 'plugin') {
-        formattedFacets.push(
-          tags.value.loaderData.allPluginLoaders.map((x) => `categories:'${encodeURIComponent(x)}'`)
-        )
-      } else if (projectType.value.id === 'mod') {
-        formattedFacets.push(
-          tags.value.loaderData.modLoaders.map((x) => `categories:'${encodeURIComponent(x)}'`)
-        )
-      } else if (projectType.value.id === 'datapack') {
-        formattedFacets.push(
-          tags.value.loaderData.dataPackLoaders.map((x) => `categories:'${encodeURIComponent(x)}'`)
-        )
-      }
-
-      if (selectedVersions.value.length > 0) {
-        const versionFacets = []
-        for (const facet of selectedVersions.value) {
-          versionFacets.push('versions:' + facet)
-        }
-        formattedFacets.push(versionFacets)
-      }
-
-      if (onlyOpenSource.value) {
-        formattedFacets.push(['open_source:true'])
-      }
-
-      if (selectedEnvironments.value.length > 0) {
-        let environmentFacets = []
-
-        const includesClient = selectedEnvironments.value.includes('client')
-        const includesServer = selectedEnvironments.value.includes('server')
-        if (includesClient && includesServer) {
-          environmentFacets = [['client_side:required'], ['server_side:required']]
-        } else {
-          if (includesClient) {
-            environmentFacets = [
-              ['client_side:optional', 'client_side:required'],
-              ['server_side:optional', 'server_side:unsupported'],
-            ]
-          }
-          if (includesServer) {
-            environmentFacets = [
-              ['client_side:optional', 'client_side:unsupported'],
-              ['server_side:optional', 'server_side:required'],
-            ]
-          }
-        }
-
-        formattedFacets = [...formattedFacets, ...environmentFacets]
-      }
-
-      if (projectType.value) {
-        formattedFacets.push([`project_type:${projectType.value.actual}`])
-      }
-
-      params.push(`facets=${encodeURIComponent(JSON.stringify(formattedFacets))}`)
-    }
-
-    const offset = (currentPage.value - 1) * maxResults.value
+    const offset = (currentPage.value - 1) * MAX_RESULTS
     if (currentPage.value !== 1) {
       params.push(`offset=${offset}`)
     }
@@ -555,7 +335,7 @@ const {
       }
     }
 
-    return `${base}${url}`
+    return `http://localhost:9000/${url}`
   },
   {
     transform: (hits) => {
@@ -565,44 +345,14 @@ const {
   }
 )
 
-const PRIMARY_MOD_LOADERS = ['fabric', 'forge', 'neoforge', 'quilt']
-
-const primaryLoaders = computed(() => {
-  return tags.value.loaders.filter((x) => {
-    if (projectType.value.id === 'mod') {
-      if (!PRIMARY_MOD_LOADERS.includes(x.name)) {
-        return false
-      } else {
-        return tags.value.loaderData.modLoaders.includes(x.name)
-      }
-    } else if (projectType.value.id === 'plugin') {
-      return tags.value.loaderData.pluginLoaders.includes(x.name)
-    } else if (projectType.value.id === 'datapack') {
-      return tags.value.loaderData.dataPackLoaders.includes(x.name)
-    } else {
-      return x.supported_project_types.includes(projectType.value.actual)
-    }
-  })
-})
-
-const secondaryLoaders = computed(() => {
-  return tags.value.loaders.filter((x) => {
-    if (projectType.value.id === 'mod') {
-      if (!PRIMARY_MOD_LOADERS.includes(x.name)) {
-        return tags.value.loaderData.modLoaders.includes(x.name)
-      }
-    }
-    return false
-  })
-})
-
-function isFilterShown(keyword) {
-  return !filterQuery.value || keyword.toLowerCase().includes(filterQuery.value.toLowerCase())
-}
-
 const results = shallowRef(toRaw(rawResults))
 const pageCount = computed(() =>
   results.value ? Math.ceil(results.value.total_hits / results.value.limit) : 1
+)
+
+const {data: statistics} = await useAsyncData(
+  `statistics`,
+  () => $fetch(`http://localhost:9000/statistics`)
 )
 
 function onSearchChange(newPageNumber) {
@@ -618,8 +368,8 @@ function onSearchChange(newPageNumber) {
 
   if (process.client) {
     const router = useRouter()
-    const obj = getSearchUrl((currentPage.value - 1) * maxResults.value, true)
-    router.replace({ path: route.path, query: obj })
+    const obj = getSearchUrl((currentPage.value - 1) * MAX_RESULTS, true)
+    router.replace({path: route.path, query: obj})
   }
 }
 
@@ -635,37 +385,9 @@ function getSearchUrl(offset, useObj) {
     queryItems.push(`o=${offset}`)
     obj.o = offset
   }
-  if (facets.value.length > 0) {
-    queryItems.push(`f=${encodeURIComponent(facets.value)}`)
-    obj.f = facets.value
-  }
-  if (orFacets.value.length > 0) {
-    queryItems.push(`g=${encodeURIComponent(orFacets.value)}`)
-    obj.g = orFacets.value
-  }
-  if (selectedVersions.value.length > 0) {
-    queryItems.push(`v=${encodeURIComponent(selectedVersions.value)}`)
-    obj.v = selectedVersions.value
-  }
-  if (onlyOpenSource.value) {
-    queryItems.push('l=true')
-    obj.l = true
-  }
-  if (showSnapshots.value) {
-    queryItems.push('h=true')
-    obj.h = true
-  }
-  if (selectedEnvironments.value.length > 0) {
-    queryItems.push(`e=${encodeURIComponent(selectedEnvironments.value)}`)
-    obj.e = selectedEnvironments.value
-  }
   if (sortType.value !== 'relevance') {
     queryItems.push(`s=${encodeURIComponent(sortType.value)}`)
     obj.s = sortType.value
-  }
-  if (maxResults.value !== 20) {
-    queryItems.push(`m=${encodeURIComponent(maxResults.value)}`)
-    obj.m = maxResults.value
   }
 
   let url = `${route.path}`
@@ -681,106 +403,9 @@ function getSearchUrl(offset, useObj) {
   return useObj ? obj : url
 }
 
-const categoriesMap = computed(() => {
-  const categories = {}
-
-  for (const category of sortedCategories()) {
-    if (categories[category.header]) {
-      categories[category.header].push(category)
-    } else {
-      categories[category.header] = [category]
-    }
-  }
-
-  return Object.keys(categories).reduce((obj, key) => {
-    obj[key] = categories[key]
-    return obj
-  }, {})
-})
-
-function clearFilters() {
-  for (const facet of [...facets.value]) {
-    toggleFacet(facet, true)
-  }
-  for (const facet of [...orFacets.value]) {
-    toggleOrFacet(facet, true)
-  }
-
-  onlyOpenSource.value = false
-  selectedVersions.value = []
-  selectedEnvironments.value = []
-  onSearchChange(1)
-}
-
-function toggleFacet(elementName, doNotSendRequest = false) {
-  const index = facets.value.indexOf(elementName)
-
-  if (index !== -1) {
-    facets.value.splice(index, 1)
-  } else {
-    facets.value.push(elementName)
-  }
-
-  if (!doNotSendRequest) {
-    onSearchChange(1)
-  }
-}
-
-function toggleOrFacet(elementName, doNotSendRequest) {
-  const index = orFacets.value.indexOf(elementName)
-  if (index !== -1) {
-    orFacets.value.splice(index, 1)
-  } else {
-    if (elementName === 'categories:purpur') {
-      if (!orFacets.value.includes('categories:paper')) {
-        orFacets.value.push('categories:paper')
-      }
-      if (!orFacets.value.includes('categories:spigot')) {
-        orFacets.value.push('categories:spigot')
-      }
-      if (!orFacets.value.includes('categories:bukkit')) {
-        orFacets.value.push('categories:bukkit')
-      }
-    } else if (elementName === 'categories:paper') {
-      if (!orFacets.value.includes('categories:spigot')) {
-        orFacets.value.push('categories:spigot')
-      }
-      if (!orFacets.value.includes('categories:bukkit')) {
-        orFacets.value.push('categories:bukkit')
-      }
-    } else if (elementName === 'categories:spigot') {
-      if (!orFacets.value.includes('categories:bukkit')) {
-        orFacets.value.push('categories:bukkit')
-      }
-    } else if (elementName === 'categories:waterfall') {
-      if (!orFacets.value.includes('categories:bungeecord')) {
-        orFacets.value.push('categories:bungeecord')
-      }
-    }
-    orFacets.value.push(elementName)
-  }
-
-  if (!doNotSendRequest) {
-    onSearchChange(1)
-  }
-}
-
-function toggleEnv(environment, sendRequest) {
-  const index = selectedEnvironments.value.indexOf(environment)
-  if (index !== -1) {
-    selectedEnvironments.value.splice(index, 1)
-  } else {
-    selectedEnvironments.value.push(environment)
-  }
-
-  if (!sendRequest) {
-    onSearchChange(1)
-  }
-}
-
 function onSearchChangeToTop(newPageNumber) {
   if (process.client) {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.scrollTo({top: 0, behavior: 'smooth'})
   }
 
   onSearchChange(newPageNumber)
@@ -789,37 +414,6 @@ function onSearchChangeToTop(newPageNumber) {
 function setSearchDisplayMode(mode) {
   cosmetics.value.searchDisplayMode[projectType.value.id] = mode
   saveCosmetics()
-  setClosestMaxResults()
-}
-
-const previousMaxResults = ref(20)
-const maxResultsForView = ref({
-  list: [5, 10, 15, 20, 50, 100],
-  grid: [6, 12, 18, 24, 48, 96],
-  gallery: [6, 10, 16, 20, 50, 100],
-})
-
-function onMaxResultsChange(newPageNumber) {
-  newPageNumber = Math.max(
-    1,
-    Math.min(
-      Math.floor(newPageNumber / (maxResults.value / previousMaxResults.value)),
-      pageCount.value
-    )
-  )
-  previousMaxResults.value = maxResults.value
-  onSearchChange(newPageNumber)
-}
-
-function setClosestMaxResults() {
-  const view = cosmetics.value.searchDisplayMode[projectType.value.id]
-  const maxResultsOptions = maxResultsForView.value[view] ?? [20]
-  const currentMax = maxResults.value
-  if (!maxResultsOptions.includes(currentMax)) {
-    maxResults.value = maxResultsOptions.reduce(function (prev, curr) {
-      return Math.abs(curr - currentMax) <= Math.abs(prev - currentMax) ? curr : prev
-    })
-  }
 }
 </script>
 
@@ -844,6 +438,7 @@ function setClosestMaxResults() {
 
   // Hide on mobile unless open
   display: none;
+
   &.open {
     display: block;
   }
@@ -965,9 +560,19 @@ h1 {
       box-shadow: none;
     }
   }
+
   h2 {
     font-size: var(--font-size-lg) !important;
   }
+}
+
+.statistic-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-base);
+  padding: 0.1rem 0;
 }
 
 .filter-section {

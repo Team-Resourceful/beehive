@@ -1,14 +1,5 @@
 <template>
   <div :style="`--_accent-color: ${toColor(project.color)}`">
-    <Modal
-      ref="modalLicense"
-      :header="project.license.name ? project.license.name : 'License'"
-      :noblur="!(cosmetics.advancedRendering ?? true)"
-    >
-      <div class="modal-license">
-        <div class="markdown-body" v-html="renderString(licenseText)"/>
-      </div>
-    </Modal>
     <ShareModal
       ref="modalShare"
       :share-title="project.title"
@@ -395,16 +386,6 @@
                   {{ licenseIdDisplay }}
                   <ExternalIcon/>
                 </a>
-                <span
-                  v-else-if="
-                      project.license.id === 'LicenseRef-All-Rights-Reserved' ||
-                      !project.license.id.includes('LicenseRef')
-                    "
-                  class="text-link"
-                  @click="getLicenseData()"
-                >
-                    {{ licenseIdDisplay }}
-                  </span>
                 <span v-else>{{ licenseIdDisplay }}</span>
               </div>
             </div>
@@ -533,20 +514,19 @@ import {
   ExternalIcon,
   formatCategory,
   formatNumber,
-  formatProjectType,
   getProjectLink,
   GlobeIcon,
   HeartIcon,
   ImageIcon as GalleryIcon,
   IssuesIcon,
   KoFiIcon,
+  LeftArrowIcon,
   ListSelector,
   Modal,
   OpenCollectiveIcon,
   PageBar,
   PatreonIcon,
   PayPalIcon,
-  renderString,
   ScrollableMultiSelect,
   SearchIcon,
   ServerIcon,
@@ -558,22 +538,16 @@ import {
   UpdatedIcon,
   VersionIcon,
   WikiIcon,
-  LeftArrowIcon,
   XIcon,
 } from 'omorphia'
-import {
-  computeVersions,
-  getProjectTypeForDisplay,
-  getProjectTypeForUrl,
-} from '~/helpers/projects.js'
 import LicenseIcon from '~/assets/images/utils/book-text.svg'
 import WrenchIcon from '~/assets/images/utils/wrench.svg'
 import GameIcon from '~/assets/images/utils/game.svg'
+import {computeVersions} from "~/helpers/projects";
 
 const route = useRoute()
 const config = useRuntimeConfig()
 
-const cosmetics = useCosmetics()
 const tags = useTags()
 const vintl = useVIntl()
 const {formats} = vintl
@@ -583,10 +557,7 @@ const selectingPlatform = ref(false)
 
 if (
   !route.params.id ||
-  !(
-    tags.value.projectTypes.find((x) => x.id === route.params.type) ||
-    route.params.type === 'project'
-  )
+  !(route.params.type === 'mod' || route.params.type === 'project')
 ) {
   throw createError({
     fatal: true,
@@ -606,11 +577,6 @@ try {
       transform: (project) => {
         if (project) {
           project.actualProjectType = JSON.parse(JSON.stringify(project.project_type))
-          project.project_type = getProjectTypeForUrl(
-            project.project_type,
-            project.loaders,
-            tags.value
-          )
 
           if (process.client && history.state && history.state.overrideProjectType) {
             project.project_type = history.state.overrideProjectType
@@ -659,7 +625,7 @@ if (project.value.project_type !== route.params.type) {
   )
 }
 
-versions.value = computeVersions(versions.value, allMembers.value)
+versions.value = computeVersions(versions.value)
 
 const selectedGameVersion = ref(null)
 const selectedPlatform = ref(null)
@@ -795,11 +761,8 @@ function toColor(color) {
   return 'rgba(' + [r, g, b, 0.5].join(',') + ')'
 }
 
-const projectTypeDisplay = formatProjectType(
-  getProjectTypeForDisplay(project.value.project_type, project.value.loaders)
-)
-const title = `${project.value.title} - Minecraft ${projectTypeDisplay}`
-const description = `${project.value.description} - Download the Minecraft ${projectTypeDisplay} ${
+const title = `${project.value.title} - Minecraft mod`
+const description = `${project.value.description} - Download the Minecraft mod ${
   project.value.title
 } by ${allMembers.value.find((x) => x.role === 'Owner').name} on Modrinth`
 
@@ -815,19 +778,6 @@ if (!route.name.startsWith('type-id-settings')) {
 }
 
 const downloadModal = ref(null)
-const modalLicense = ref(null)
-const licenseText = ref('')
-
-async function getLicenseData() {
-  try {
-    const text = await useBaseFetch(`tag/license/${project.value.license.id}`)
-    licenseText.value = text.body
-  } catch {
-    licenseText.value = 'License text could not be retrieved.'
-  }
-
-  modalLicense.value.show()
-}
 
 const allGameVersionsSorted = computed(() =>
   tags.value.gameVersions.sort((a, b) => {

@@ -14,9 +14,7 @@
         class="version-button button-base button-transparent button-base"
         @click="
           $router.push(
-            `/${project.project_type}/${
-              project.slug ? project.slug : project.id
-            }/version/${encodeURI(version.displayUrlEnding)}`
+            `/${project.project_type}/${route.params.id}/version/${encodeURI(version.id)}`
           )
         "
       >
@@ -31,7 +29,7 @@
           <DownloadIcon aria-hidden="true" />
         </a>
         <nuxt-link
-          :to="`/${project.project_type}/${route.params.id}/version/${encodeURI(version.displayUrlEnding)}`"
+          :to="`/${project.project_type}/${route.params.id}/version/${encodeURI(version.id)}`"
           class="version__title"
         >
           {{ version.name }}
@@ -44,15 +42,11 @@
           <span class="version_number">{{ version.version_number }}</span>
         </div>
         <div class="version__supports">
-          <span>
-            {{ version.loaders.map((x) => formatCategory(x)).join(', ') }}
-          </span>
+          <span>{{ version.loaders.map((x) => formatCategory(x)).join(', ') }}</span>
           <span>{{ formatVersions(version.game_versions, tags.gameVersions) }}</span>
         </div>
         <div class="version__stats">
-          <span>
-            <strong>{{ formatBytes(version.primaryFile.size) }}</strong>
-          </span>
+          <strong>{{ formatBytes(version.primaryFile.size) }}</strong>
           <span>
             Published on
             <strong>{{ dayjs(version.date_published).format('MMM D, YYYY') }}</strong>
@@ -100,12 +94,6 @@ const props = defineProps({
     type: Array,
     default() {
       return []
-    },
-  },
-  currentMember: {
-    type: Object,
-    default() {
-      return null
     },
   },
 })
