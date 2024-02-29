@@ -9,14 +9,18 @@
           @focusout="mobileBrowseOpen = false"
         >
           <div class="links cascade-links">
-            <NuxtLink
-              v-for="navRoute in navRoutes"
-              :key="navRoute.href"
-              :to="navRoute.href"
-              class="btn"
-            >
-              {{ navRoute.label }}
-            </NuxtLink>
+            <a class="btn" href="https://github.com/teamresourceful/beehive">
+              GitHub
+            </a>
+            <a class="btn" href="https://teamresourceful.com">
+              Website
+            </a>
+            <a class="btn" href="https://twitter.com/teamresourceful">
+              Twitter
+            </a>
+            <a class="btn" href="https://discord.gg/resourcefulbees">
+              Discord
+            </a>
           </div>
         </div>
         <div
@@ -44,8 +48,8 @@
             title="Search"
             @click="toggleBrowseMenu()"
           >
-            <SearchIcon/>
-            Browse
+            <LinkIcon/>
+            Links
           </button>
           <button class="tab button-animation" title="Toggle Mobile Menu"
                   @click="toggleMobileMenu()">
@@ -64,7 +68,9 @@
     <div class="page-layout">
       <nav>
         <div class="navbar-brand">
-          <h1>UR MOM</h1>
+          <nuxt-link href="/mods">
+            <h1>Beehive</h1>
+          </nuxt-link>
         </div>
         <div class="navbar-links">
           <OverflowMenu
@@ -73,79 +79,54 @@
             direction="left"
             :options="[
               {
-                id: 'mods',
-                link: '/mods',
+                id: 'github',
+                link: 'https://github.com/teamresourceful/beehive',
               },
               {
-                id: 'modpacks',
-                link: '/modpacks',
+                id: 'website',
+                link: 'https://teamresourceful.com',
               },
               {
-                id: 'datapacks',
-                link: '/datapacks',
+                id: 'twitter',
+                link: 'https://twitter.com/teamresourceful',
               },
               {
-                id: 'resourcepacks',
-                link: '/resourcepacks',
-              },
-              {
-                id: 'shaders',
-                link: '/shaders',
-              },
-              {
-                id: 'plugins',
-                link: '/plugins',
+                id: 'discord',
+                link: 'https://discord.gg/resourcefulbees',
               },
             ]"
           >
             Browse
             <DropdownIcon/>
-            <template #mods>
-              <BoxIcon/>
-              Mods
+            <template #github>
+              <SSOGitHubIcon/>
+              GitHub
             </template>
-            <template #modpacks>
-              <PackageIcon/>
-              Modpacks
+            <template #website>
+              <CodeIcon/>
+              Website
             </template>
-            <template #datapacks>
-              <BracesIcon/>
-              Data Packs
+            <template #twitter>
+              <TwitterIcon/>
+              Twitter
             </template>
-            <template #resourcepacks>
-              <ImageIcon/>
-              Resource Packs
-            </template>
-            <template #shaders>
-              <GlassesIcon/>
-              Shaders
-            </template>
-            <template #plugins>
-              <ServerIcon/>
-              Plugins
+            <template #discord>
+              <DiscordIcon/>
+              Discord
             </template>
           </OverflowMenu>
-          <nuxt-link class="btn btn-transparent btn-header small-width-hidden" :to="`/mods`">
-            Mods
-          </nuxt-link>
-          <nuxt-link class="btn btn-transparent btn-header small-width-hidden" :to="`/modpacks`">
-            Modpacks
-          </nuxt-link>
-          <nuxt-link class="btn btn-transparent btn-header small-width-hidden" :to="`/datapacks`">
-            Data Packs
-          </nuxt-link>
-          <nuxt-link
-            class="btn btn-transparent btn-header small-width-hidden"
-            :to="`/resourcepacks`"
-          >
-            Resource Packs
-          </nuxt-link>
-          <nuxt-link class="btn btn-transparent btn-header small-width-hidden" :to="`/shaders`">
-            Shaders
-          </nuxt-link>
-          <nuxt-link class="btn btn-transparent btn-header small-width-hidden" :to="`/plugins`">
-            Plugins
-          </nuxt-link>
+          <a class="btn btn-transparent btn-header small-width-hidden" href="https://github.com/teamresourceful/beehive">
+            GitHub
+          </a>
+          <a class="btn btn-transparent btn-header small-width-hidden" href="https://teamresourceful.com">
+            Website
+          </a>
+          <a class="btn btn-transparent btn-header small-width-hidden" href="https://twitter.com/teamresourceful">
+            Twitter
+          </a>
+          <a class="btn btn-transparent btn-header small-width-hidden" href="https://discord.gg/resourcefulbees">
+            Discord
+          </a>
         </div>
       </nav>
       <main>
@@ -153,7 +134,7 @@
       </main>
       <footer>
         <div class="logo-info">
-          <h1 class="text-logo">UR MOM</h1>
+          <h1 class="text-logo">Beehive</h1>
           <h6 class="not-affiliated-notice">NOT AN OFFICIAL MINECRAFT PRODUCT.<br>NOT APPROVED BY OR
             ASSOCIATED WITH MOJANG.</h6>
           <div class="buttons">
@@ -197,21 +178,19 @@
 </template>
 <script setup>
 import {
-  BoxIcon,
+  CodeIcon,
+  LinkIcon,
   DropdownIcon,
   HamburgerIcon,
-  ImageIcon,
   MoonIcon,
   OverflowMenu,
-  SearchIcon,
-  ServerIcon,
   SettingsIcon,
+  DiscordIcon,
+  SSOGitHubIcon,
   SunIcon,
+  TwitterIcon,
   XIcon as CrossIcon,
 } from 'omorphia'
-import PackageIcon from '~/assets/images/utils/package-open.svg'
-import GlassesIcon from '~/assets/images/utils/glasses.svg'
-import BracesIcon from '~/assets/images/utils/braces.svg'
 
 const cosmetics = useCosmetics()
 const colorMode = useTheme()
@@ -267,26 +246,6 @@ const navRoutes = ref([
   {
     label: 'Mods',
     href: '/mods',
-  },
-  {
-    label: 'Modpacks',
-    href: '/modpacks',
-  },
-  {
-    label: 'Data Packs',
-    href: '/datapacks',
-  },
-  {
-    label: 'Resource Packs',
-    href: '/resourcepacks',
-  },
-  {
-    label: 'Shaders',
-    href: '/shaders',
-  },
-  {
-    label: 'Plugins',
-    href: '/plugins',
   },
 ])
 
