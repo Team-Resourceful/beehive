@@ -1,0 +1,144 @@
+.columns {
+  display: flex;
+
+  @for $i from 1 through 5 {
+    .column-grow-#{$i} {
+      flex-grow: $i;
+    }
+  }
+}
+
+.full-page {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.75rem;
+}
+
+.normal-page {
+  display: grid;
+  padding: 0 0.75rem;
+
+  grid-template:
+    'header'
+    'sidebar'
+    'content'
+    'info'
+    / 100%;
+
+  .normal-page__sidebar {
+    grid-area: sidebar;
+  }
+
+  .normal-page__info {
+    grid-area: info;
+  }
+
+  .normal-page__content {
+    grid-area: content;
+  }
+
+  .normal-page__header {
+    grid-area: header;
+  }
+}
+
+.normal-page__header h1:first-child,
+.normal-page-heading {
+  margin-block: var(--gap-sm) var(--gap-lg);
+  font-size: 2em;
+  line-height: 1em;
+}
+
+.settings-page {
+  display: grid;
+  padding: 0 0.75rem;
+
+  grid-template:
+    'header'
+    'sidebar'
+    'content'
+    'info'
+    / 100%;
+
+  @media screen and (max-width: 1024px) {
+    margin-top: var(--gap-md);
+  }
+
+  .settings-page__sidebar {
+    grid-area: sidebar;
+  }
+
+  .settings-page__info {
+    grid-area: info;
+  }
+
+  .settings-page__content {
+    grid-area: content;
+  }
+
+  .settings-page__header {
+    grid-area: header;
+  }
+}
+
+@media (min-width: 1024px) {
+  .full-page {
+    margin: 0 auto;
+    max-width: 1280px;
+    width: 80rem;
+  }
+
+  .normal-page {
+    margin: 0 auto;
+    max-width: 1280px;
+    column-gap: var(--gap-lg);
+
+    grid-template:
+      'header header' auto
+      'content sidebar' auto
+      'content info' auto
+      'content dummy' 1fr
+      / 1fr 20rem;
+
+    &.alt-layout {
+      grid-template:
+        'header header' auto
+        'sidebar content' auto
+        'info content' auto
+        'dummy content' 1fr
+        / 20rem 1fr;
+    }
+  }
+
+  .normal-page__sidebar {
+    min-width: 20rem;
+    width: 20rem;
+  }
+
+  .normal-page__content {
+    max-width: calc(60rem - var(--gap-lg));
+    overflow-x: hidden;
+  }
+
+  .settings-page {
+    margin: 0 auto;
+    max-width: 1280px;
+    column-gap: var(--gap-lg);
+
+    grid-template:
+      'header header' auto
+      'sidebar content' auto
+      'sidebar content' auto
+      'sidebar content' 1fr
+      / 20rem 1fr;
+  }
+
+  .settings-page__sidebar {
+    min-width: 20rem;
+    width: 20rem;
+  }
+
+  .settings-page__content {
+    max-width: calc(60rem - var(--gap-lg));
+  }
+}
