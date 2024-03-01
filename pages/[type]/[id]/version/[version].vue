@@ -6,7 +6,7 @@
         :link-stack="[
           {
             href: getPreviousLink,
-            label: getPreviousLabel,
+            label: 'Versions',
           },
         ]"
       />
@@ -26,14 +26,9 @@
         </a>
       </div>
     </div>
-    <div class="version-page__changelog card">
-      <h3>Changes</h3>
-      <div
-        class="markdown-body"
-        v-html="
-          version.changelog ? renderHighlightedString(version.changelog) : 'No changelog specified.'
-        "
-      />
+    <div class="version-page__maven card">
+      <h3>Maven Usage</h3>
+      <MavenInfo :group="project.group" :artifact="version.artifact" :version="version.version"/>
     </div>
     <div
       v-if="deps.length > 0"
@@ -161,8 +156,8 @@ import {
   FileIcon,
   formatBytes,
   formatVersions,
-  renderHighlightedString,
 } from 'omorphia'
+import MavenInfo from "~/components/ui/MavenInfo.vue";
 
 const props = defineProps({
   project: {
@@ -272,22 +267,11 @@ const deps = computed(() => {
 const getPreviousLink = computed(() => {
   const router = useRouter()
   if (router.options.history.state.back) {
-    if (
-      router.options.history.state.back.includes('/changelog') ||
-      router.options.history.state.back.includes('/versions')
-    ) {
+    if (router.options.history.state.back.includes('/versions')) {
       return router.options.history.state.back
     }
   }
   return `/${props.project.project_type}/${route.params.id}/versions`
-})
-
-const getPreviousLabel = computed(() => {
-  const router = useRouter()
-  return router.options.history.state.back &&
-  router.options.history.state.back.endsWith('/changelog')
-    ? 'Changelog'
-    : 'Versions'
 })
 
 </script>
@@ -302,7 +286,7 @@ const getPreviousLabel = computed(() => {
 
   grid-template:
     'title' auto
-    'changelog' auto
+    'maven' auto
     'dependencies' auto
     'metadata' auto
     'files' auto
@@ -355,8 +339,8 @@ const getPreviousLabel = computed(() => {
     margin: 0 0 0.5rem 0;
   }
 
-  .version-page__changelog {
-    grid-area: changelog;
+  .version-page__maven {
+    grid-area: maven;
     overflow-x: hidden;
   }
 
@@ -509,7 +493,7 @@ const getPreviousLabel = computed(() => {
   .version-page {
     grid-template:
       'title title' auto
-      'changelog metadata' auto
+      'maven metadata' auto
       'dependencies metadata' auto
       'files metadata' auto
       'dummy metadata' 1fr
