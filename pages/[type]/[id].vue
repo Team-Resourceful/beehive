@@ -797,7 +797,7 @@ const supportsMcVersions = computed(() => {
   }
   display.push(
     ...allMcVersions
-      .filter((v) => versions.includes(v.version) && v.major)
+      .filter((v) => versions.includes(v.version) && v.version_type === "release")
       .slice(0, 4)
       .map((v) => v.version)
   )

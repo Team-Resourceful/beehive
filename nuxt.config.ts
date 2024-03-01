@@ -4,6 +4,7 @@ import svgLoader from 'vite-svg-loader'
 import {basename, relative, resolve} from 'pathe'
 import {defineNuxtConfig} from 'nuxt/config'
 import {globIterate} from 'glob'
+import {$fetch} from 'ofetch'
 import {match as matchLocale} from '@formatjs/intl-localematcher'
 import {consola} from 'consola'
 
@@ -100,8 +101,6 @@ export default defineNuxtConfig({
       let state: {
         lastGenerated?: string
         apiUrl?: string
-        categories?: any[]
-        loaders?: any[]
         gameVersions?: any[]
       } = {}
 
@@ -127,6 +126,20 @@ export default defineNuxtConfig({
       state.lastGenerated = new Date().toISOString()
 
       state.apiUrl = API_URL
+
+      const gameVersions: any = await $fetch(`https://piston-meta.mojang.com/mc/game/version_manifest_v2.json`)
+
+      state.gameVersions = gameVersions.versions.map((version: any) => {
+        return {
+            version: version.id,
+            version_type: version.type,
+            date: version.releaseTime
+        }
+      })
+
+      await fs.writeFile('./generated/state.json', JSON.stringify(state))
+
+      console.log('Tags generated!')
     },
     'pages:extend'(routes) {
       routes.splice(

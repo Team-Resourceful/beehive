@@ -55,13 +55,15 @@
       </div>
     </div>
 <!--    TODO FIX THIS PAGINATION AS OMORPHIA DOESNT HAVE SPECIAL CASES FOR ALL PAGES-->
-    <Pagination
-      :page="currentPage"
-      :count="Math.ceil(filteredVersions.length / 20)"
-      class="pagination-before"
-      :link-function="(page) => `?page=${page}`"
-      @switch-page="switchPage"
-    />
+    <div class="version-pagination">
+      <Pagination
+        :page="currentPage"
+        :count="Math.ceil(filteredVersions.length / 20)"
+        class="pagination-before"
+        :link-function="(page) => `?page=${page}`"
+        @switch-page="switchPage"
+      />
+    </div>
   </div>
 </template>
 <script setup>
@@ -151,6 +153,15 @@ function switchPage(page) {
 </script>
 
 <style lang="scss" scoped>
+.version-pagination {
+  display: flex;
+  justify-content: center;
+
+  .pagination-before {
+    width: fit-content;
+  }
+}
+
 .btn-download {
   --_text-color: var(--color-contrast);
   --_background-color: var(--color-super-raised-bg);

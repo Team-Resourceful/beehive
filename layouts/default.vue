@@ -130,6 +130,32 @@
           <a class="btn btn-transparent btn-header small-width-hidden" href="https://discord.gg/resourcefulbees">
             Discord
           </a>
+          <OverflowMenu
+            class="btn btn-transparent btn-header btn-dropdown-animation"
+            position="bottom"
+            direction="left"
+            :options="[
+              {
+                id: 'settings',
+                link: '/settings',
+              },
+              {
+                id: 'theme',
+                action: () => changeTheme(colorMode.value),
+              },
+            ]"
+          >
+            <SettingsIcon/>
+            <template #settings>
+              <SettingsIcon/>
+              Settings
+            </template>
+            <template #theme>
+              <MoonIcon v-if="colorMode.value === 'light'" aria-hidden="true"/>
+              <SunIcon v-else aria-hidden="true"/>
+              Change Theme
+            </template>
+          </OverflowMenu>
         </div>
       </nav>
       <main>
@@ -143,17 +169,6 @@
           </span>
           <h6 class="not-affiliated-notice">NOT AN OFFICIAL MINECRAFT PRODUCT.<br>NOT APPROVED BY OR
             ASSOCIATED WITH MOJANG.</h6>
-          <div class="buttons">
-            <button class="btn raised" @click="changeTheme(colorMode.value)">
-              <MoonIcon v-if="colorMode.value === 'light'" aria-hidden="true"/>
-              <SunIcon v-else aria-hidden="true"/>
-              Change theme
-            </button>
-            <nuxt-link class="btn raised" to="/settings">
-              <SettingsIcon aria-hidden="true"/>
-              Settings
-            </nuxt-link>
-          </div>
         </div>
         <div class="link-info">
           <div class="links">
@@ -413,7 +428,7 @@ function toggleBrowseMenu() {
   svg {
     width: 2rem;
     height: 2rem;
-    color: var(--color-contrast);
+    color: var(--color-brand);
   }
 }
 
@@ -621,9 +636,9 @@ footer {
   justify-content: space-between;
 
   .logo-info {
+    width: 15rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 
     .buttons {
       display: flex;
@@ -659,6 +674,13 @@ footer {
     color: var(--color-gray);
   }
 
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 0.5rem;
+  }
+
   @media screen and (min-width: 1280px) {
     max-width: 1280px;
     width: 1280px;
@@ -667,21 +689,19 @@ footer {
   }
 
   @media screen and (max-width: 1024px) {
-    footer {
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+
+    .logo-info {
       align-items: center;
       flex-direction: column;
       gap: 2rem;
+    }
 
-      .logo-info {
-        align-items: center;
-        flex-direction: column;
-        gap: 2rem;
-      }
-
-      .buttons {
-        flex-direction: row;
-        gap: 1rem;
-      }
+    .buttons {
+      flex-direction: row;
+      gap: 1rem;
     }
 
     .link-info {
