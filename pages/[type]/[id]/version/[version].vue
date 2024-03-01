@@ -26,7 +26,7 @@
         </a>
       </div>
     </div>
-    <div class="version-page__maven card">
+    <div class="version-page__maven card" v-if="cosmetics.mavenInfo">
       <h3>Maven Usage</h3>
       <MavenInfo :group="project.group" :artifact="version.artifact" :version="version.version"/>
     </div>
@@ -181,6 +181,7 @@ const props = defineProps({
 })
 
 const route = useRoute()
+const cosmetics = useCosmetics()
 
 const tags = useTags()
 
