@@ -21,7 +21,7 @@
         <a
           v-tooltip="version.primaryFile.filename"
           :href="version.primaryFile.url"
-          class="download-button btn icon-only btn-primary"
+          class="download-button btn icon-only btn-download"
           :class="version.version_type"
           :aria-label="`Download ${version.name}`"
           @click.stop="(event) => event.stopPropagation()"
@@ -151,6 +151,12 @@ function switchPage(page) {
 </script>
 
 <style lang="scss" scoped>
+.btn-download {
+  --_text-color: var(--color-contrast);
+  --_background-color: var(--color-super-raised-bg);
+  --_accent-color: var(--color-super-raised-bg);
+}
+
 .header-buttons {
   display: flex;
   align-items: center;

@@ -23,8 +23,8 @@ defineProps({
   },
 })
 
-const iconUrl = computed(() => 'https://cdn.modrinth.com/game/minecraft-java-icon.png')
-const bannerUrl = computed(() => 'https://cdn.modrinth.com/game/minecraft-java-banner.jpg')
+const iconUrl = computed(() => 'https://files.teamresourceful.com/u/minecraft-java-icon.webp')
+const bannerUrl = computed(() => 'https://files.teamresourceful.com/u/minecraft-java-banner.webp')
 </script>
 
 <style lang="scss" scoped>

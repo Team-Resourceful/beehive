@@ -35,7 +35,7 @@
 <script setup>
 
 useHead({
-  title: `Developer settings - Modrinth`,
+  title: `Developer settings - Hive`,
 })
 
 const cosmetics = useCosmetics()

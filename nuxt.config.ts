@@ -1,12 +1,11 @@
-import { promises as fs } from 'fs'
-import { pathToFileURL } from 'node:url'
+import {promises as fs} from 'fs'
+import {pathToFileURL} from 'node:url'
 import svgLoader from 'vite-svg-loader'
-import { resolve, basename, relative } from 'pathe'
-import { defineNuxtConfig } from 'nuxt/config'
-import { $fetch } from 'ofetch'
-import { globIterate } from 'glob'
-import { match as matchLocale } from '@formatjs/intl-localematcher'
-import { consola } from 'consola'
+import {basename, relative, resolve} from 'pathe'
+import {defineNuxtConfig} from 'nuxt/config'
+import {globIterate} from 'glob'
+import {match as matchLocale} from '@formatjs/intl-localematcher'
+import {consola} from 'consola'
 
 const STAGING_API_URL = 'https://staging-api.modrinth.com/v2/'
 
@@ -51,7 +50,7 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'en',
       },
-      title: 'Modrinth',
+      title: 'Beehive',
       link: [
         // The type is necessary because the linter can't always compare this very nested/complex type on itself
         ...preloadedFonts.map((font): object => {
@@ -70,7 +69,7 @@ export default defineNuxtConfig({
           rel: 'search',
           type: 'application/opensearchdescription+xml',
           href: '/opensearch.xml',
-          title: 'Modrinth mods',
+          title: 'Beehive Projects',
         },
       ],
     },
@@ -135,16 +134,12 @@ export default defineNuxtConfig({
         1
       )
 
-      const types = ['mods']
-
-      types.forEach((type) =>
-        routes.push({
-          name: `search-${type}`,
-          path: `/${type}`,
-          file: resolve(__dirname, 'pages/search/[searchProjectType].vue'),
-          children: [],
-        })
-      )
+      routes.push({
+        name: `search-projects`,
+        path: `/projects`,
+        file: resolve(__dirname, 'pages/search/[searchProjectType].vue'),
+        children: [],
+      })
     },
     async 'vintl:extendOptions'(opts) {
       opts.locales ??= []

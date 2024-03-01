@@ -6,11 +6,11 @@
     }"
   >
     <Head>
-      <Title>Search mods - Modrinth</Title>
+      <Title>Search projects - Beehive</Title>
     </Head>
     <section class="normal-page__header">
       <GameBanner game="minecraft_java"/>
-      <h1 class="type-header">Mods</h1>
+<!--      <h1 class="type-header">Projects</h1>-->
       <PageBar class="filter-row">
         <span class="page-bar__title">Sort by</span>
         <div class="sort-by-desktop">
@@ -132,7 +132,7 @@
               </span>
               <span class="statistic-line">
                 <ScaleIcon/>
-                <strong>{{ formatNumber(statistics?.size || 0) }}</strong>
+                <strong>{{ formatBytes(statistics?.size || 0) }}</strong>
                  Storage
               </span>
               <span class="statistic-line">
@@ -155,7 +155,7 @@
             v-model="query"
             type="text"
             name="search"
-            :placeholder="`Search mods...`"
+            :placeholder="`Search projects...`"
             autocomplete="off"
             @input="onSearchChange(1)"
           />
@@ -237,7 +237,7 @@ import {
   Button,
   DownloadIcon,
   DropdownIcon,
-  FileIcon,
+  FileIcon, formatBytes,
   formatNumber,
   GridIcon,
   HeartIcon,
@@ -252,7 +252,6 @@ import {
   UnknownIcon,
   XIcon,
 } from 'omorphia'
-
 import TopIcon from 'assets/images/utils/arrow-big-up-dash.svg'
 import NewIcon from 'assets/images/utils/burst.svg'
 import FrownIcon from '~/assets/images/utils/frown.svg'
@@ -284,12 +283,12 @@ const currentPage = ref(1)
 const projectType = ref({id: 'mod', display: 'mod', actual: 'mod'})
 
 const ogTitle = computed(
-  () => `Search mods${query.value ? ' | ' + query.value : ''}`
+  () => `Search projects${query.value ? ' | ' + query.value : ''}`
 )
 
 const description = computed(
   () =>
-    `Search and browse thousands of Minecraft mods on Modrinth with instant, accurate search results. Our filters help you quickly find the best Minecraft ${projectType.value.display}s.`
+    `Search and browse thousands of Minecraft mods on Beehive with instant, accurate search results.`
 )
 
 useSeoMeta({
@@ -442,6 +441,10 @@ function setSearchDisplayMode(mode) {
   &.open {
     display: block;
   }
+}
+
+.filter-row {
+  margin-top: var(--gap-lg);
 }
 
 .no-results {

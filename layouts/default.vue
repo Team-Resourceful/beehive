@@ -68,8 +68,11 @@
     <div class="page-layout">
       <nav>
         <div class="navbar-brand">
-          <nuxt-link href="/mods">
-            <h1>Beehive</h1>
+          <nuxt-link href="/projects">
+            <span class="wordmark">
+              <BeeHiveOutline/>
+              <h1>Beehive</h1>
+            </span>
           </nuxt-link>
         </div>
         <div class="navbar-links">
@@ -134,7 +137,10 @@
       </main>
       <footer>
         <div class="logo-info">
-          <h1 class="text-logo">Beehive</h1>
+          <span class="wordmark text-logo">
+            <BeeHiveOutline/>
+            <h1>Beehive</h1>
+          </span>
           <h6 class="not-affiliated-notice">NOT AN OFFICIAL MINECRAFT PRODUCT.<br>NOT APPROVED BY OR
             ASSOCIATED WITH MOJANG.</h6>
           <div class="buttons">
@@ -191,6 +197,7 @@ import {
   TwitterIcon,
   XIcon as CrossIcon,
 } from 'omorphia'
+import BeeHiveOutline from '~/assets/images/icons/beehive-outline.svg'
 
 const cosmetics = useCosmetics()
 const colorMode = useTheme()
@@ -208,20 +215,16 @@ useHead({
   ],
 })
 
-const description =
-  'Download Minecraft mods, plugins, datapacks, shaders, resourcepacks, and modpacks on Modrinth. ' +
-  'Discover and publish projects on Modrinth with a modern, easy to use interface and API.'
-
 useSeoMeta({
-  title: 'Modrinth',
-  description,
-  publisher: 'Modrinth',
+  title: 'Beehive',
+  description: 'Download Minecraft mods, plugins, datapacks, shaders, resourcepacks, and modpacks on Beehive. ',
+  publisher: 'Beehive',
   themeColor: [{color: '#1bd96a'}],
   colorScheme: 'dark light',
 
   // OpenGraph
-  ogTitle: 'Modrinth',
-  ogSiteName: 'Modrinth',
+  ogTitle: 'Beehive',
+  ogSiteName: 'Beehive',
   ogDescription: 'Discover and publish Minecraft content!',
   ogType: 'website',
   ogImage: 'https://cdn.modrinth.com/modrinth-new.png',
@@ -229,7 +232,7 @@ useSeoMeta({
 
   // Twitter
   twitterCard: 'summary',
-  twitterSite: '@modrinth',
+  twitterSite: '@teamresourceful',
 })
 
 function changeTheme(value) {
@@ -241,13 +244,6 @@ function changeTheme(value) {
 
 const mobileUserOpen = ref(false)
 const mobileBrowseOpen = ref(false)
-
-const navRoutes = ref([
-  {
-    label: 'Mods',
-    href: '/mods',
-  },
-])
 
 watch(
   () => route.path,
@@ -401,6 +397,23 @@ function toggleBrowseMenu() {
         }
       }
     }
+  }
+}
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+
+  h1 {
+    margin: 0;
+  }
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+    color: var(--color-contrast);
   }
 }
 
@@ -611,12 +624,6 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
-    .text-logo {
-      width: 10rem;
-      height: auto;
-      margin: 0;
-    }
 
     .buttons {
       display: flex;

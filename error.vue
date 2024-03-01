@@ -7,7 +7,7 @@
         <p>{{ error.message }}</p>
         <div class="input-group push-right">
           <nuxt-link to="/" class="btn btn-primary"> Go home </nuxt-link>
-          <a href="https://discord.modrinth.com" class="btn raised" rel="noopener">
+          <a href="https://rsfl.team/discord" class="btn raised" rel="noopener">
             Get help on Discord
           </a>
         </div>

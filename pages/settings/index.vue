@@ -47,7 +47,7 @@
         <label for="external-links-new-tab">
           <span class="label__title">Open external links in new tab</span>
           <span class="label__description">
-            Make links which go outside of Modrinth open in a new tab. No matter this setting, links
+            Make links which go outside of Beehive open in a new tab. No matter this setting, links
             on the same domain and in Markdown descriptions will open in the same tab, and links on
             ads and edit pages will open in a new tab.
           </span>
@@ -68,7 +68,7 @@
 import {Button, RadioButtonChecked as RadioButtonCheckedIcon, RadioButtonIcon,} from 'omorphia'
 
 useHead({
-  title: `Display settings - Modrinth`,
+  title: `Display settings - Beehive`,
 })
 
 const systemTheme = ref('light')

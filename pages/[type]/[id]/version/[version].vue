@@ -157,13 +157,11 @@ import {
   Badge,
   Breadcrumbs,
   Categories,
-  CopyCode,
   DownloadIcon,
   FileIcon,
   formatBytes,
   formatVersions,
   renderHighlightedString,
-  StarIcon,
 } from 'omorphia'
 
 const props = defineProps({
@@ -247,7 +245,7 @@ const description = computed(
   () =>
     `Download ${props.project.title} ${
       version.value.version_number
-    } on Modrinth. Supports ${formatVersions(
+    } on Beehive. Supports ${formatVersions(
       version.value.game_versions,
       tags.value.gameVersions
     )} ${version.value.loaders

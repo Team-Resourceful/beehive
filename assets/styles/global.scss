@@ -1,3 +1,9 @@
+:root {
+  --color-brand: rgb(237, 159, 81);
+  --color-brand-highlight: rgba(237, 159, 81, 0.25);
+  --color-brand-shadow: rgba(237, 159, 81, 0.7);
+}
+
 .oled-mode {
   --color-bg: #000000;
   --color-raised-bg: #010102;

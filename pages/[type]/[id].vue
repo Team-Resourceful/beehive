@@ -44,7 +44,7 @@
                   : null
               "
               :class="{
-                incompatible: !valid,
+                incompatible: !valid
               }"
               :model-value="selectedGameVersion === version"
               class="list-selector"
@@ -88,7 +88,7 @@
                   : null
               "
               :class="{
-                incompatible: !valid,
+                incompatible: !valid
               }"
               class="list-selector"
               :model-value="selectedPlatform === platform"
@@ -182,7 +182,7 @@
         <div class="breadcrumbs">
           <span>Minecraft: Java Edition</span>
           <ChevronRightIcon/>
-          <nuxt-link :to="`/mods`">Mods</nuxt-link>
+          <nuxt-link :to="`/projects`">Projects</nuxt-link>
           <ChevronRightIcon/>
           <span class="current">{{ project.title }}</span>
         </div>
@@ -761,10 +761,10 @@ function toColor(color) {
   return 'rgba(' + [r, g, b, 0.5].join(',') + ')'
 }
 
-const title = `${project.value.title} - Minecraft mod`
+const title = `${project.value.title} - Minecraft Mod`
 const description = `${project.value.description} - Download the Minecraft mod ${
   project.value.title
-} by ${allMembers.value.find((x) => x.role === 'Owner').name} on Modrinth`
+} by ${allMembers.value.find((x) => x.role === 'Owner').name} on Beehive`
 
 if (!route.name.startsWith('type-id-settings')) {
   useSeoMeta({

@@ -98,8 +98,6 @@ import {
   XIcon,
 } from 'omorphia'
 
-const cosmetics = useCosmetics()
-
 const props = defineProps({
   project: {
     type: Object,
@@ -110,7 +108,7 @@ const props = defineProps({
 })
 
 const title = `${props.project.title} - Gallery`
-const description = `View ${props.project.gallery.length} images of ${props.project.title} on Modrinth.`
+const description = `View ${props.project.gallery.length} images of ${props.project.title} on Beehive.`
 
 useSeoMeta({
   title,
