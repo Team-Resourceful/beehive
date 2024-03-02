@@ -119,6 +119,8 @@ updateTextBox()
       margin: 0;
       overflow: hidden;
       resize: none;
+
+      font-family: var(--mono-font)
     }
 
     &:hover {
