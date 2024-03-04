@@ -141,19 +141,6 @@ export default defineNuxtConfig({
 
       console.log('Tags generated!')
     },
-    'pages:extend'(routes) {
-      routes.splice(
-        routes.findIndex((x) => x.name === 'search-searchProjectType'),
-        1
-      )
-
-      routes.push({
-        name: `search-projects`,
-        path: `/projects`,
-        file: resolve(__dirname, 'pages/search/[searchProjectType].vue'),
-        children: [],
-      })
-    },
     async 'vintl:extendOptions'(opts) {
       opts.locales ??= []
 

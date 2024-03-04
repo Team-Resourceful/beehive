@@ -82,7 +82,7 @@
               aria-label="List"
               class="btn icon-only"
               :class="{
-                'btn-brand-highlight': cosmetics.searchDisplayMode[projectType.id] === 'list',
+                'btn-brand-highlight': cosmetics.displayMode === 'list',
               }"
               @click="setSearchDisplayMode('list')"
             >
@@ -93,7 +93,7 @@
               aria-label="Grid"
               class="btn icon-only"
               :class="{
-                'btn-brand-highlight': cosmetics.searchDisplayMode[projectType.id] === 'grid',
+                'btn-brand-highlight': cosmetics.displayMode === 'grid',
               }"
               @click="setSearchDisplayMode('grid')"
             >
@@ -187,9 +187,7 @@
           class="project-list"
           :class="
             'display-mode--' +
-            (['list', 'grid'].includes(cosmetics.searchDisplayMode[projectType.id])
-              ? cosmetics.searchDisplayMode[projectType.id]
-              : 'list')
+            (cosmetics.displayMode)
           "
           role="list"
           aria-label="Search results"
@@ -198,7 +196,7 @@
             v-for="result in results?.hits"
             :id="result.slug"
             :key="result.slug"
-            :display="cosmetics.searchDisplayMode[projectType.id]"
+            :display="cosmetics.displayMode"
             :featured-image="result.featured_gallery ? result.featured_gallery : result.gallery[0]"
             type="mod"
             :author="result.author"
@@ -254,7 +252,7 @@ import {
 } from 'omorphia'
 import TopIcon from 'assets/images/utils/arrow-big-up-dash.svg'
 import NewIcon from 'assets/images/utils/burst.svg'
-import FrownIcon from '~/assets/images/utils/frown.svg'
+import FrownIcon from 'assets/images/utils/frown.svg'
 import GameBanner from '~/components/ui/GameBanner.vue'
 
 const MAX_RESULTS = 20
@@ -263,8 +261,6 @@ const sortTypeDisplayNames = {
   relevance: 'Top',
   newest: 'New',
   updated: 'Updated recently',
-  downloads: 'Most downloaded',
-  follows: 'Most followed',
 }
 
 const sidebarMenuOpen = ref(false)
@@ -280,7 +276,6 @@ const sortModes = shallowReadonly([
 
 const sortType = ref('relevance')
 const currentPage = ref(1)
-const projectType = ref({id: 'mod', display: 'mod', actual: 'mod'})
 
 const ogTitle = computed(
   () => `Search projects${query.value ? ' | ' + query.value : ''}`
@@ -411,7 +406,7 @@ function onSearchChangeToTop(newPageNumber) {
 }
 
 function setSearchDisplayMode(mode) {
-  cosmetics.value.searchDisplayMode[projectType.value.id] = mode
+  cosmetics.value.displayMode = mode
   saveCosmetics()
 }
 </script>

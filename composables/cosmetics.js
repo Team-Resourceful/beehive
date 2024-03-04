@@ -15,16 +15,7 @@ export const useCosmetics = () =>
         developerMode: false,
         mavenInfo: false,
         preferredDarkTheme: 'dark',
-        searchDisplayMode: {
-          mod: 'list',
-          plugin: 'list',
-          resourcepack: 'gallery',
-          modpack: 'list',
-          shader: 'gallery',
-          datapack: 'list',
-          user: 'list',
-        },
-        searchFiltersCollapsed: {},
+        displayMode: 'list',
       }
     }
 
