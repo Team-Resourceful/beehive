@@ -44,7 +44,7 @@
                   : null
               "
               :class="{
-                incompatible: !valid
+                incompatible: !valid,
               }"
               :model-value="selectedGameVersion === version"
               class="list-selector"
@@ -72,7 +72,7 @@
           <div class="heading">
             <h2>Select platform</h2>
             <button class="btn" @click="() => (selectingPlatform = false)">
-              <LeftArrowIcon/>
+              <LeftArrowIcon />
               Back
             </button>
           </div>
@@ -88,7 +88,7 @@
                   : null
               "
               :class="{
-                incompatible: !valid
+                incompatible: !valid,
               }"
               class="list-selector"
               :model-value="selectedPlatform === platform"
@@ -116,16 +116,16 @@
               :class="{ 'warning-outline': highlightGameVersion && !selectedGameVersion }"
               @click="() => (selectingGameVersion = true)"
             >
-              <GameIcon/>
+              <GameIcon />
 
               {{
                 project.game_versions.length === 1
                   ? `Game version: ${project.game_versions[0]}`
                   : selectedGameVersion
-                    ? `Game version: ${selectedGameVersion}`
-                    : 'Select game version'
+                  ? `Game version: ${selectedGameVersion}`
+                  : 'Select game version'
               }}
-              <ChevronRightIcon/>
+              <ChevronRightIcon />
             </button>
             <UnknownIcon
               v-if="project.game_versions.length === 1"
@@ -142,15 +142,15 @@
               :class="{ 'warning-outline': highlightPlatform && !selectedPlatform }"
               @click="() => (selectingPlatform = true)"
             >
-              <WrenchIcon/>
+              <WrenchIcon />
               {{
                 project.loaders.length === 1
                   ? `Platform: ${formatCategory(project.loaders[0])}`
                   : selectedPlatform
-                    ? `Platform: ${formatCategory(selectedPlatform)}`
-                    : 'Select platform'
+                  ? `Platform: ${formatCategory(selectedPlatform)}`
+                  : 'Select platform'
               }}
-              <ChevronRightIcon/>
+              <ChevronRightIcon />
             </button>
             <UnknownIcon
               v-if="project.loaders.length === 1"
@@ -166,7 +166,7 @@
             :link="selectedVersion ? selectedVersion.primaryFile.url : ''"
             :disabled="!selectedVersion"
           >
-            <DownloadIcon/>
+            <DownloadIcon />
             Download
           </Button>
         </div>
@@ -181,14 +181,14 @@
       <div class="normal-page__header">
         <div class="breadcrumbs">
           <span>Minecraft: Java Edition</span>
-          <ChevronRightIcon/>
+          <ChevronRightIcon />
           <nuxt-link :to="`/projects`">Projects</nuxt-link>
-          <ChevronRightIcon/>
+          <ChevronRightIcon />
           <span class="current">{{ project.title }}</span>
         </div>
         <div class="proj-header">
           <div class="game-icon">
-            <Avatar :src="project.icon_url" class="avatar" no-shadow size="none"/>
+            <Avatar :src="project.icon_url" class="avatar" no-shadow size="none" />
           </div>
           <div class="game-title">
             <div class="game-name">
@@ -196,17 +196,17 @@
             </div>
             <div class="mod-stats">
               <span class="stat">
-                <span class="label"><DownloadIcon/></span>
+                <span class="label"><DownloadIcon /></span>
                 <span class="value">{{ formatNumber(project.downloads) }}</span>
                 <span class="label"> downloads</span>
               </span>
               <span class="stat">
-                <span class="label"><HeartIcon/></span>
+                <span class="label"><HeartIcon /></span>
                 <span class="value">{{ formatNumber(project.followers) }}</span>
                 <span class="label"> followers</span>
               </span>
               <span class="stat">
-                <span class="label"><UpdatedIcon/></span>
+                <span class="label"><UpdatedIcon /></span>
                 <span class="label">Updated</span>
                 <span class="value">{{ fromNow(project.updated) }}</span>
               </span>
@@ -225,7 +225,7 @@
                   }
                 "
               >
-                <DownloadIcon/>
+                <DownloadIcon />
                 Download Latest
               </Button>
             </div>
@@ -236,7 +236,7 @@
             :to="`/${project.project_type}/${route.params.id}`"
             class="button-base nav-button"
           >
-            <DescriptionIcon/>
+            <DescriptionIcon />
             About
           </nuxt-link>
           <nuxt-link
@@ -244,14 +244,14 @@
             :to="`/${project.project_type}/${route.params.id}/gallery`"
             class="button-base nav-button"
           >
-            <GalleryIcon/>
+            <GalleryIcon />
             Gallery
           </nuxt-link>
           <nuxt-link
             :to="`/${project.project_type}/${route.params.id}/versions`"
             class="button-base nav-button"
           >
-            <VersionIcon/>
+            <VersionIcon />
             Versions
           </nuxt-link>
         </PageBar>
@@ -271,10 +271,10 @@
         >
           <img
             :src="
-                featuredGalleryImage
-                  ? featuredGalleryImage.url
-                  : 'https://launcher-files.modrinth.com/assets/maze-bg.png'
-              "
+              featuredGalleryImage
+                ? featuredGalleryImage.url
+                : 'https://launcher-files.modrinth.com/assets/maze-bg.png'
+            "
             alt="test"
           />
         </nuxt-link>
@@ -282,11 +282,11 @@
           <h2>Details</h2>
           <div class="supports-details">
             <div class="primary-stat">
-              <GameIcon class="primary-stat__icon" aria-hidden="true"/>
+              <GameIcon class="primary-stat__icon" aria-hidden="true" />
               <div class="primary-stat__text">
                 Minecraft
                 <span class="primary-stat__counter">
-                    {{
+                  {{
                     formats
                       .list(
                         moreVersions > 0
@@ -295,27 +295,30 @@
                       )
                       .replace('$$$_REPLACEME_$$$', '')
                   }}
-                    <template v-if="moreVersions > 0">
-                      <NuxtLink :to="`/${project.project_type}/${route.params.id}/versions`" class="text-link">
-                        {{ moreVersions }} more
-                      </NuxtLink>
-                    </template>
-                  </span>
+                  <template v-if="moreVersions > 0">
+                    <NuxtLink
+                      :to="`/${project.project_type}/${route.params.id}/versions`"
+                      class="text-link"
+                    >
+                      {{ moreVersions }} more
+                    </NuxtLink>
+                  </template>
+                </span>
               </div>
             </div>
             <div
               v-if="
-                  !(project.loaders.length === 1 && project.loaders[0] === 'datapack') &&
-                  project.project_type !== 'resourcepack'
-                "
+                !(project.loaders.length === 1 && project.loaders[0] === 'datapack') &&
+                project.project_type !== 'resourcepack'
+              "
               class="primary-stat"
             >
-              <WrenchIcon class="primary-stat__icon" aria-hidden="true"/>
+              <WrenchIcon class="primary-stat__icon" aria-hidden="true" />
               <div class="primary-stat__text">
                 Supports
                 <span class="primary-stat__counter">
-                    {{ formats.list(project.loaders.map((x) => formatCategory(x))) }}
-                  </span>
+                  {{ formats.list(project.loaders.map((x) => formatCategory(x))) }}
+                </span>
               </div>
             </div>
             <div
@@ -325,7 +328,7 @@
               <template
                 v-if="project.client_side === 'optional' && project.server_side === 'optional'"
               >
-                <GlobeIcon class="primary-stat__icon" aria-hidden="true"/>
+                <GlobeIcon class="primary-stat__icon" aria-hidden="true" />
                 <div class="primary-stat__text">
                   Either
                   <span class="primary-stat__counter">client or server-side</span>
@@ -334,7 +337,7 @@
               <template
                 v-else-if="project.client_side === 'required' && project.server_side === 'required'"
               >
-                <GlobeIcon class="primary-stat__icon" aria-hidden="true"/>
+                <GlobeIcon class="primary-stat__icon" aria-hidden="true" />
                 <div class="primary-stat__text">
                   Both
                   <span class="primary-stat__counter">client and server-side</span>
@@ -342,39 +345,39 @@
               </template>
               <template
                 v-else-if="
-                    (project.client_side === 'optional' || project.client_side === 'required') &&
-                    (project.server_side === 'optional' || project.server_side === 'unsupported')
-                  "
+                  (project.client_side === 'optional' || project.client_side === 'required') &&
+                  (project.server_side === 'optional' || project.server_side === 'unsupported')
+                "
               >
-                <ClientIcon class="primary-stat__icon" aria-hidden="true"/>
+                <ClientIcon class="primary-stat__icon" aria-hidden="true" />
                 <div class="primary-stat__text">
                   <span class="primary-stat__counter">Client-side only</span>
                 </div>
               </template>
               <template
                 v-else-if="
-                    (project.server_side === 'optional' || project.client_side === 'required') &&
-                    (project.client_side === 'optional' || project.server_side === 'unsupported')
-                  "
+                  (project.server_side === 'optional' || project.client_side === 'required') &&
+                  (project.client_side === 'optional' || project.server_side === 'unsupported')
+                "
               >
-                <ServerIcon class="primary-stat__icon" aria-hidden="true"/>
+                <ServerIcon class="primary-stat__icon" aria-hidden="true" />
                 <div class="primary-stat__text">
                   <span class="primary-stat__counter">Server-side only</span>
                 </div>
               </template>
               <template
                 v-else-if="
-                    project.server_side === 'unsupported' && project.client_side === 'unsupported'
-                  "
+                  project.server_side === 'unsupported' && project.client_side === 'unsupported'
+                "
               >
-                <BanIcon class="primary-stat__icon" aria-hidden="true"/>
+                <BanIcon class="primary-stat__icon" aria-hidden="true" />
                 <div class="primary-stat__text">
                   <span class="primary-stat__counter">Unsupported</span>
                 </div>
               </template>
             </div>
             <div class="primary-stat">
-              <LicenseIcon class="primary-stat__icon" aria-hidden="true"/>
+              <LicenseIcon class="primary-stat__icon" aria-hidden="true" />
               <div class="primary-stat__text">
                 Licensed
                 <a
@@ -384,7 +387,7 @@
                   rel="noopener nofollow ugc"
                 >
                   {{ licenseIdDisplay }}
-                  <ExternalIcon/>
+                  <ExternalIcon />
                 </a>
                 <span v-else>{{ licenseIdDisplay }}</span>
               </div>
@@ -392,7 +395,7 @@
           </div>
           <div class="button-group-long">
             <Button @click="$refs.modalShare.show(`${getProjectUrl()}`)">
-              <ShareIcon/>
+              <ShareIcon />
               Share
             </Button>
           </div>
@@ -400,27 +403,13 @@
         <div v-if="project.links.length > 0" class="members card">
           <h2>Links</h2>
           <div class="links">
-            <a
+            <CustomLink
               v-for="(link, index) in project.links"
               :key="index"
-              :href="link.url"
-              :target="external()"
-              rel="noopener nofollow ugc"
-            >
-              <BuyMeACoffeeLogo v-if="link.icon === 'bmac'" aria-hidden="true"/>
-              <PatreonIcon v-else-if="link.icon === 'patreon'" aria-hidden="true"/>
-              <KoFiIcon v-else-if="link.icon === 'ko-fi'" aria-hidden="true"/>
-              <PayPalIcon v-else-if="link.icon === 'paypal'" aria-hidden="true"/>
-              <OpenCollectiveIcon v-else-if="link.icon === 'open-collective'" aria-hidden="true"/>
-              <HeartIcon v-else-if="link.icon === 'sponsor'" aria-hidden="true"/>
-              <IssuesIcon v-else-if="link.icon === 'issues'" aria-hidden="true"/>
-              <CodeIcon v-else-if="link.icon === 'code'" aria-hidden="true"/>
-              <WikiIcon v-else-if="link.icon === 'wiki'" aria-hidden="true"/>
-              <DiscordIcon v-else-if="link.icon === 'discord'" class="shrink" aria-hidden="true"/>
-              <UnknownIcon v-else/>
-              <span>{{ link.text }}</span>
-              <ExternalIcon aria-hidden="true" class="external-icon"/>
-            </a>
+              :url="link.url"
+              :icon="link.icon"
+              :text="link.text"
+            />
           </div>
         </div>
         <div class="members card">
@@ -432,7 +421,7 @@
             :href="member.link"
             :target="external()"
           >
-            <Avatar :src="member.icon" :alt="member.name" size="sm" circle/>
+            <Avatar :src="member.icon" :alt="member.name" size="sm" circle />
 
             <div class="member-info">
               <p class="name">{{ member.name }}</p>
@@ -452,11 +441,8 @@ import {
   AlignLeftIcon as DescriptionIcon,
   Avatar,
   Button,
-  BuyMeACoffeeIcon as BuyMeACoffeeLogo,
   ChevronRightIcon,
   ClientIcon,
-  CodeIcon,
-  DiscordIcon,
   DownloadIcon,
   ExternalIcon,
   formatCategory,
@@ -465,15 +451,10 @@ import {
   GlobeIcon,
   HeartIcon,
   ImageIcon as GalleryIcon,
-  IssuesIcon,
-  KoFiIcon,
   LeftArrowIcon,
   ListSelector,
   Modal,
-  OpenCollectiveIcon,
   PageBar,
-  PatreonIcon,
-  PayPalIcon,
   ScrollableMultiSelect,
   SearchIcon,
   ServerIcon,
@@ -484,28 +465,25 @@ import {
   UnknownIcon,
   UpdatedIcon,
   VersionIcon,
-  WikiIcon,
   XIcon,
 } from 'omorphia'
 import LicenseIcon from '~/assets/images/utils/book-text.svg'
 import WrenchIcon from '~/assets/images/utils/wrench.svg'
 import GameIcon from '~/assets/images/utils/game.svg'
-import {computeVersions} from "~/helpers/projects";
+import { computeVersions } from '~/helpers/projects'
+import CustomLink from '~/components/ui/CustomLink.vue'
 
 const route = useRoute()
 const config = useRuntimeConfig()
 
 const tags = useTags()
 const vintl = useVIntl()
-const {formats} = vintl
+const { formats } = vintl
 
 const selectingGameVersion = ref(false)
 const selectingPlatform = ref(false)
 
-if (
-  !route.params.id ||
-  !(route.params.type === 'mod' || route.params.type === 'project')
-) {
+if (!route.params.id || !(route.params.type === 'mod' || route.params.type === 'project')) {
   throw createError({
     fatal: true,
     statusCode: 404,
@@ -515,27 +493,26 @@ if (
 
 let project, allMembers, versions
 try {
-  ;[
-    {data: project},
-    {data: allMembers},
-    {data: versions},
-  ] = await Promise.all([
-    useAsyncData(`project/${route.params.id}`, () => $fetch(`http://localhost:9000/projects/${route.params.id}`), {
-      transform: (project) => {
-        if (project) {
-          project.actualProjectType = JSON.parse(JSON.stringify(project.project_type))
-
-          if (process.client && history.state && history.state.overrideProjectType) {
-            project.project_type = history.state.overrideProjectType
-          }
-        }
-
-        return project
-      },
-    }),
+  ;[{ data: project }, { data: allMembers }, { data: versions }] = await Promise.all([
     useAsyncData(
-      `project/${route.params.id}/members`,
-      () => $fetch(`http://localhost:9000/teams/${route.params.id}`),
+      `project/${route.params.id}`,
+      () => $fetch(`http://localhost:9000/projects/${route.params.id}`),
+      {
+        transform: (project) => {
+          if (project) {
+            project.actualProjectType = JSON.parse(JSON.stringify(project.project_type))
+
+            if (process.client && history.state && history.state.overrideProjectType) {
+              project.project_type = history.state.overrideProjectType
+            }
+          }
+
+          return project
+        },
+      }
+    ),
+    useAsyncData(`project/${route.params.id}/members`, () =>
+      $fetch(`http://localhost:9000/teams/${route.params.id}`)
     ),
     useAsyncData(`project/${route.params.id}/version`, () =>
       $fetch(`http://localhost:9000/versions/${route.params.id}`)
@@ -568,7 +545,7 @@ if (project.value.project_type !== route.params.type) {
     `/${project.value.project_type}/${route.params.id}${
       path.length > 0 ? `/${path.join('/')}` : ''
     }`,
-    {redirectCode: 301, replace: true}
+    { redirectCode: 301, replace: true }
   )
 }
 
@@ -636,7 +613,7 @@ const gameVersionSuggestions = computed(() => {
       (version) =>
         showSnapshots.value ||
         allGameVersionsSorted.value.find((x) => x.version === version.version).version_type !==
-        'snapshot'
+          'snapshot'
     )
     .sort((a, b) => {
       const compareValid = b.valid - a.valid
@@ -744,7 +721,7 @@ const supportsMcVersions = computed(() => {
   }
   display.push(
     ...allMcVersions
-      .filter((v) => versions.includes(v.version) && v.version_type === "release")
+      .filter((v) => versions.includes(v.version) && v.version_type === 'release')
       .slice(0, 4)
       .map((v) => v.version)
   )
@@ -755,7 +732,6 @@ const supportsMcVersions = computed(() => {
 const moreVersions = computed(() => {
   return project.value.game_versions.length - supportsMcVersions.value.length
 })
-
 </script>
 <style lang="scss" scoped>
 .card {
