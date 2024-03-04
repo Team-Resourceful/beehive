@@ -397,81 +397,28 @@
             </Button>
           </div>
         </div>
-        <div
-          v-if="
-              project.issues_url ||
-              project.source_url ||
-              project.wiki_url ||
-              project.discord_url ||
-              project.donation_urls.length > 0
-            "
-          class="members card"
-        >
+        <div v-if="project.links.length > 0" class="members card">
           <h2>Links</h2>
           <div class="links">
             <a
-              v-if="project.issues_url"
-              :href="project.issues_url"
-              :target="external()"
-              rel="noopener nofollow ugc"
-            >
-              <IssuesIcon aria-hidden="true"/>
-              Report issues
-              <ExternalIcon aria-hidden="true" class="external-icon"/>
-            </a>
-            <a
-              v-if="project.source_url"
-              :href="project.source_url"
-              :target="external()"
-              rel="noopener nofollow ugc"
-            >
-              <CodeIcon aria-hidden="true"/>
-              View source
-              <ExternalIcon aria-hidden="true" class="external-icon"/>
-            </a>
-            <a
-              v-if="project.wiki_url"
-              :href="project.wiki_url"
-              :target="external()"
-              rel="noopener nofollow ugc"
-            >
-              <WikiIcon aria-hidden="true"/>
-              Visit wiki
-              <ExternalIcon aria-hidden="true" class="external-icon"/>
-            </a>
-            <a
-              v-if="project.discord_url"
-              :href="project.discord_url"
-              :target="external()"
-              rel="noopener nofollow ugc"
-            >
-              <DiscordIcon class="shrink" aria-hidden="true"/>
-              Join Discord server
-              <ExternalIcon aria-hidden="true" class="external-icon"/>
-            </a>
-            <a
-              v-for="(donation, index) in project.donation_urls"
+              v-for="(link, index) in project.links"
               :key="index"
-              :href="donation.url"
+              :href="link.url"
               :target="external()"
               rel="noopener nofollow ugc"
             >
-              <BuyMeACoffeeLogo v-if="donation.id === 'bmac'" aria-hidden="true"/>
-              <PatreonIcon v-else-if="donation.id === 'patreon'" aria-hidden="true"/>
-              <KoFiIcon v-else-if="donation.id === 'ko-fi'" aria-hidden="true"/>
-              <PayPalIcon v-else-if="donation.id === 'paypal'" aria-hidden="true"/>
-              <OpenCollectiveIcon
-                v-else-if="donation.id === 'open-collective'"
-                aria-hidden="true"
-              />
-              <HeartIcon v-else-if="donation.id === 'github'"/>
+              <BuyMeACoffeeLogo v-if="link.icon === 'bmac'" aria-hidden="true"/>
+              <PatreonIcon v-else-if="link.icon === 'patreon'" aria-hidden="true"/>
+              <KoFiIcon v-else-if="link.icon === 'ko-fi'" aria-hidden="true"/>
+              <PayPalIcon v-else-if="link.icon === 'paypal'" aria-hidden="true"/>
+              <OpenCollectiveIcon v-else-if="link.icon === 'open-collective'" aria-hidden="true"/>
+              <HeartIcon v-else-if="link.icon === 'sponsor'" aria-hidden="true"/>
+              <IssuesIcon v-else-if="link.icon === 'issues'" aria-hidden="true"/>
+              <CodeIcon v-else-if="link.icon === 'code'" aria-hidden="true"/>
+              <WikiIcon v-else-if="link.icon === 'wiki'" aria-hidden="true"/>
+              <DiscordIcon v-else-if="link.icon === 'discord'" class="shrink" aria-hidden="true"/>
               <UnknownIcon v-else/>
-              <span v-if="donation.id === 'bmac'">Buy Me a Coffee</span>
-              <span v-else-if="donation.id === 'patreon'">Donate on Patreon</span>
-              <span v-else-if="donation.id === 'paypal'">Donate on PayPal</span>
-              <span v-else-if="donation.id === 'ko-fi'">Donate on Ko-fi</span>
-              <span v-else-if="donation.id === 'github'">Sponsor on GitHub</span>
-              <span v-else>Donate</span>
+              <span>{{ link.text }}</span>
               <ExternalIcon aria-hidden="true" class="external-icon"/>
             </a>
           </div>
