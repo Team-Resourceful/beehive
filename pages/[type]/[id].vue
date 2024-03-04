@@ -946,55 +946,6 @@ const moreVersions = computed(() => {
   display: flex;
   flex-direction: column;
   gap: var(--gap-md);
-
-  a {
-    display: inline-flex;
-    align-items: center;
-    border-radius: 1rem;
-    color: var(--color-base);
-    font-weight: 500;
-    width: fit-content;
-
-    svg,
-    img {
-      height: 1.1rem;
-      width: 1.1rem;
-      color: var(--color-secondary);
-      margin-right: var(--gap-sm);
-    }
-
-    .external-icon {
-      visibility: hidden;
-      height: 0.8rem;
-      width: 0.8rem;
-      margin-left: var(--gap-xs);
-
-      transition: color 0.2s ease;
-    }
-
-    &:hover {
-      .external-icon {
-        visibility: visible;
-      }
-    }
-
-    &:focus-visible,
-    &:hover {
-      &,
-      svg,
-      img {
-        color: var(--color-contrast);
-      }
-    }
-
-    &:active {
-      svg,
-      img,
-      span {
-        color: var(--color-contrast);
-      }
-    }
-  }
 }
 
 .team-member {
