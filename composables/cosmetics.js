@@ -13,7 +13,7 @@ export const useCosmetics = () =>
         advancedRendering: true,
         externalLinksNewTab: true,
         developerMode: false,
-        mavenInfo: false,
+        mavenInfo: true,
         preferredDarkTheme: 'dark',
         displayMode: 'list',
       }

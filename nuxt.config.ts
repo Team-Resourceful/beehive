@@ -15,12 +15,6 @@ const preloadedFonts = [
   'inter/Inter-Bold.woff2',
 ]
 
-const favicons = {
-  '(prefers-color-scheme:no-preference)': '/favicon-light.ico',
-  '(prefers-color-scheme:light)': '/favicon-light.ico',
-  '(prefers-color-scheme:dark)': '/favicon.ico',
-}
-
 /**
  * Tags of locales that are auto-discovered besides the default locale.
  *
@@ -61,9 +55,11 @@ export default defineNuxtConfig({
             crossorigin: 'anonymous',
           }
         }),
-        ...Object.entries(favicons).map(([media, href]): object => {
-          return { rel: 'icon', type: 'image/x-icon', href, media }
-        }),
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          href: '/favicon.ico'
+        },
       ],
     },
   },
@@ -96,7 +92,7 @@ export default defineNuxtConfig({
         state = JSON.parse(await fs.readFile('./generated/state.json', 'utf8'))
       } catch {
         // File doesn't exist, create folder
-        await fs.mkdir('./generated', { recursive: true })
+        await fs.mkdir('./generated', {recursive: true})
       }
 
       state.lastGenerated = new Date().toISOString()
@@ -105,9 +101,9 @@ export default defineNuxtConfig({
 
       state.gameVersions = gameVersions.versions.map((version: any) => {
         return {
-            version: version.id,
-            version_type: version.type,
-            date: version.releaseTime
+          version: version.id,
+          version_type: version.type,
+          date: version.releaseTime
         }
       })
 
@@ -123,7 +119,7 @@ export default defineNuxtConfig({
 
         for await (const localeFile of globIterate(
           'node_modules/@vintl/compact-number/dist/locale-data/*.mjs',
-          { ignore: '**/*.data.mjs' }
+          {ignore: '**/*.data.mjs'}
         )) {
           const tag = basename(localeFile, '.mjs')
           compactNumberLocales.push(tag)
@@ -151,9 +147,9 @@ export default defineNuxtConfig({
 
           const localeFiles: { from: string; format?: string }[] = []
 
-          omorphiaLocaleSets.set(tag, { files: localeFiles })
+          omorphiaLocaleSets.set(tag, {files: localeFiles})
 
-          for await (const localeFile of globIterate(`${localeDir}/*`, { posix: true })) {
+          for await (const localeFile of globIterate(`${localeDir}/*`, {posix: true})) {
             localeFiles.push({
               from: pathToFileURL(localeFile).toString(),
               format: 'default',
@@ -166,17 +162,17 @@ export default defineNuxtConfig({
         }
       })()
 
-      for await (const localeDir of globIterate('locales/*/', { posix: true })) {
+      for await (const localeDir of globIterate('locales/*/', {posix: true})) {
         const tag = basename(localeDir)
         if (!enabledLocales.includes(tag) && opts.defaultLocale !== tag) continue
 
         const locale =
           opts.locales.find((locale) => locale.tag === tag) ??
-          opts.locales[opts.locales.push({ tag }) - 1]
+          opts.locales[opts.locales.push({tag}) - 1]
 
         const localeFiles = (locale.files ??= [])
 
-        for await (const localeFile of globIterate(`${localeDir}/*`, { posix: true })) {
+        for await (const localeFile of globIterate(`${localeDir}/*`, {posix: true})) {
           const fileName = basename(localeFile)
           if (fileName === 'index.json') {
             localeFiles.push({
@@ -266,12 +262,12 @@ export default defineNuxtConfig({
     seo: {
       defaultLocaleHasParameter: false,
     },
-    onParseError({ error, message, messageId, moduleId, parseMessage, parserOptions }) {
+    onParseError({error, message, messageId, moduleId, parseMessage, parserOptions}) {
       const errorMessage = String(error)
       const modulePath = relative(__dirname, moduleId)
 
       try {
-        const fallback = parseMessage(message, { ...parserOptions, ignoreTag: true })
+        const fallback = parseMessage(message, {...parserOptions, ignoreTag: true})
 
         consola.warn(
           `[i18n] ${messageId} in ${modulePath} cannot be parsed normally due to ${errorMessage}. The tags will will not be parsed.`
