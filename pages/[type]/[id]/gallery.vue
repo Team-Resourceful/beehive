@@ -9,19 +9,17 @@
         <img
           class="image"
           :class="{ 'zoomed-in': zoomedIn }"
-          :src="
-            expandedGalleryItem.url || 'https://cdn.modrinth.com/placeholder-banner.svg'
-          "
-          :alt="expandedGalleryItem.title || 'gallery-image'"
+          :src="expandedGalleryItem?.url"
+          :alt="expandedGalleryItem?.title || 'gallery-image'"
           @click.stop
         />
 
         <div class="floating" @click.stop>
           <div class="text">
-            <h2 v-if="expandedGalleryItem.title">
+            <h2 v-if="expandedGalleryItem?.title">
               {{ expandedGalleryItem.title }}
             </h2>
-            <p v-if="expandedGalleryItem.description">
+            <p v-if="expandedGalleryItem?.description">
               {{ expandedGalleryItem.description }}
             </p>
           </div>
@@ -31,10 +29,10 @@
                 <XIcon aria-hidden="true"/>
               </button>
               <a
-                v-if="expandedGalleryItem.url"
+                v-if="expandedGalleryItem?.url"
                 class="open circle-button"
                 target="_blank"
-                :href="expandedGalleryItem.url"
+                :href="expandedGalleryItem?.url"
               >
                 <ExternalIcon aria-hidden="true"/>
               </a>
@@ -65,7 +63,7 @@
       <div v-for="(item, index) in project.gallery" :key="index" class="card gallery-item">
         <a class="gallery-thumbnail" @click="expandImage(item, index)">
           <img
-            :src="item.url || 'https://cdn.modrinth.com/placeholder-banner.svg'"
+            :src="item.url"
             :alt="item.title || 'gallery-image'"
           />
         </a>

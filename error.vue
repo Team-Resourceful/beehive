@@ -1,15 +1,19 @@
 <template>
   <NuxtLayout>
     <div class="main">
-      <div class="error">
+      <div class="page-error" :class="{
+        'not-found': error.statusCode === 404,
+      }">
         <Logo404 v-if="error.statusCode === 404" />
-        <h1 v-else>An error occurred!</h1>
-        <p>{{ error.message }}</p>
-        <div class="input-group push-right">
-          <nuxt-link to="/" class="btn btn-primary"> Go home </nuxt-link>
-          <a href="https://rsfl.team/discord" class="btn raised" rel="noopener">
-            Get help on Discord
-          </a>
+        <div>
+          <h1 v-if="error.statusCode !== 404">An error occurred!</h1>
+          <p>{{ error.message }}</p>
+          <div class="input-group">
+            <nuxt-link to="/" class="btn btn-primary"> Go home </nuxt-link>
+            <a href="https://rsfl.team/discord" class="btn raised" rel="noopener">
+              Get help on Discord
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -34,15 +38,17 @@ defineProps({
 
 <style lang="scss" scoped>
 .main {
-  margin: var(--gap-xl) auto;
-  width: calc(100% - 4rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  @media screen and (min-width: 800px) {
-    width: 600px;
-  }
+  width: 100%;
+  height: 100%;
 }
 
-.error {
+.page-error {
+  width: 60%;
+
   h1 {
     margin-bottom: 0.25rem;
   }
@@ -53,6 +59,26 @@ defineProps({
 
     width: 100%;
     height: auto;
+    aspect-ratio: 1/1;
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .input-group {
+    display: flex;
+    gap: 1rem;
   }
 }
+
+.not-found {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
 </style>

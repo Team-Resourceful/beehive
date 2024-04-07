@@ -15,21 +15,6 @@
               <LeftArrowIcon /> Back
             </button>
           </div>
-          <div class="iconified-input">
-            <label class="hidden" for="search">Search</label>
-            <SearchIcon aria-hidden="true" />
-            <input
-              id="search"
-              v-model="gameVersionQuery"
-              type="text"
-              name="search"
-              :placeholder="`Search versions...`"
-              autocomplete="off"
-            />
-            <Button v-if="gameVersionQuery" @click="() => (gameVersionQuery = '')">
-              <XIcon />
-            </Button>
-          </div>
           <ScrollableMultiSelect>
             <ListSelector
               v-for="{ version, valid } in gameVersionSuggestions.filter(
@@ -270,11 +255,7 @@
           class="featured-gallery-image button-base"
         >
           <img
-            :src="
-              featuredGalleryImage
-                ? featuredGalleryImage.url
-                : 'https://launcher-files.modrinth.com/assets/maze-bg.png'
-            "
+            :src="featuredGalleryImage.url"
             alt="test"
           />
         </nuxt-link>
@@ -456,7 +437,6 @@ import {
   Modal,
   PageBar,
   ScrollableMultiSelect,
-  SearchIcon,
   ServerIcon,
   ShareIcon,
   ShareModal,
@@ -465,7 +445,6 @@ import {
   UnknownIcon,
   UpdatedIcon,
   VersionIcon,
-  XIcon,
 } from 'omorphia'
 import LicenseIcon from '~/assets/images/utils/book-text.svg'
 import WrenchIcon from '~/assets/images/utils/wrench.svg'
@@ -696,7 +675,7 @@ if (!route.name.startsWith('type-id-settings')) {
     description,
     ogTitle: title,
     ogDescription: project.value.description,
-    ogImage: project.value.icon_url ?? 'https://cdn.modrinth.com/placeholder.png',
+    ogImage: project.value.icon_url,
     robots: 'all',
   })
 }

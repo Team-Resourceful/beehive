@@ -242,7 +242,7 @@ useSeoMeta({
   ogSiteName: 'Beehive',
   ogDescription: 'Discover and publish Minecraft content!',
   ogType: 'website',
-  ogImage: 'https://cdn.modrinth.com/modrinth-new.png',
+  ogImage: 'https://images.teamresourceful.com/u/IDWLGs.png',
   ogUrl: link,
 
   // Twitter

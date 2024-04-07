@@ -1,14 +1,12 @@
 import {promises as fs} from 'fs'
 import {pathToFileURL} from 'node:url'
 import svgLoader from 'vite-svg-loader'
-import {basename, relative, resolve} from 'pathe'
+import {basename, relative} from 'pathe'
 import {defineNuxtConfig} from 'nuxt/config'
 import {globIterate} from 'glob'
 import {$fetch} from 'ofetch'
 import {match as matchLocale} from '@formatjs/intl-localematcher'
 import {consola} from 'consola'
-
-const STAGING_API_URL = 'https://staging-api.modrinth.com/v2/'
 
 const preloadedFonts = [
   'inter/Inter-Regular.woff2',
@@ -66,12 +64,6 @@ export default defineNuxtConfig({
         ...Object.entries(favicons).map(([media, href]): object => {
           return { rel: 'icon', type: 'image/x-icon', href, media }
         }),
-        {
-          rel: 'search',
-          type: 'application/opensearchdescription+xml',
-          href: '/opensearch.xml',
-          title: 'Beehive Projects',
-        },
       ],
     },
   },
@@ -95,12 +87,8 @@ export default defineNuxtConfig({
   },
   hooks: {
     async 'build:before'() {
-      // 30 minutes
-      const TTL = 30 * 60 * 1000
-
       let state: {
         lastGenerated?: string
-        apiUrl?: string
         gameVersions?: any[]
       } = {}
 
@@ -111,21 +99,7 @@ export default defineNuxtConfig({
         await fs.mkdir('./generated', { recursive: true })
       }
 
-      const API_URL = getApiUrl()
-
-      if (
-        // Skip regeneration if within TTL...
-        state.lastGenerated &&
-        new Date(state.lastGenerated).getTime() + TTL > new Date().getTime() &&
-        // ...but only if the API URL is the same
-        state.apiUrl === API_URL
-      ) {
-        return
-      }
-
       state.lastGenerated = new Date().toISOString()
-
-      state.apiUrl = API_URL
 
       const gameVersions: any = await $fetch(`https://piston-meta.mojang.com/mc/game/version_manifest_v2.json`)
 
@@ -143,8 +117,6 @@ export default defineNuxtConfig({
     },
     async 'vintl:extendOptions'(opts) {
       opts.locales ??= []
-
-      const isProduction = getDomain() === 'https://modrinth.com'
 
       const resolveCompactNumberDataImport = await (async () => {
         const compactNumberLocales: string[] = []
@@ -196,7 +168,7 @@ export default defineNuxtConfig({
 
       for await (const localeDir of globIterate('locales/*/', { posix: true })) {
         const tag = basename(localeDir)
-        if (isProduction && !enabledLocales.includes(tag) && opts.defaultLocale !== tag) continue
+        if (!enabledLocales.includes(tag) && opts.defaultLocale !== tag) continue
 
         const locale =
           opts.locales.find((locale) => locale.tag === tag) ??
@@ -250,8 +222,8 @@ export default defineNuxtConfig({
     public: {
       siteUrl: getDomain(),
 
-      owner: process.env.VERCEL_GIT_REPO_OWNER || 'modrinth',
-      slug: process.env.VERCEL_GIT_REPO_SLUG || 'knossos',
+      owner: 'teamresourceful',
+      slug: 'beehive',
       branch:
         process.env.VERCEL_GIT_COMMIT_REF ||
         process.env.CF_PAGES_BRANCH ||
@@ -259,7 +231,6 @@ export default defineNuxtConfig({
         globalThis.CF_PAGES_BRANCH ||
         'master',
       hash:
-        process.env.VERCEL_GIT_COMMIT_SHA ||
         process.env.CF_PAGES_COMMIT_SHA ||
         // @ts-ignore
         globalThis.CF_PAGES_COMMIT_SHA ||
@@ -332,11 +303,6 @@ export default defineNuxtConfig({
   },
 })
 
-function getApiUrl() {
-  // @ts-ignore
-  return process.env.BROWSER_BASE_URL ?? globalThis.BROWSER_BASE_URL ?? STAGING_API_URL
-}
-
 function getDomain() {
   if (process.env.NODE_ENV === 'production') {
     if (process.env.SITE_URL) {
@@ -346,14 +312,8 @@ function getDomain() {
     else if (process.env.CF_PAGES_URL || globalThis.CF_PAGES_URL) {
       // @ts-ignore
       return process.env.CF_PAGES_URL ?? globalThis.CF_PAGES_URL
-    } else if (process.env.HEROKU_APP_NAME) {
-      return `https://${process.env.HEROKU_APP_NAME}.herokuapp.com`
-    } else if (process.env.VERCEL_URL) {
-      return `https://${process.env.VERCEL_URL}`
-    } else if (getApiUrl() === STAGING_API_URL) {
-      return 'https://staging.modrinth.com'
     } else {
-      return 'https://modrinth.com'
+      return 'https://beehive.resourceful.team'
     }
   } else {
     return 'http://localhost:3000'
