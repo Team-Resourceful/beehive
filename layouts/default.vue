@@ -9,7 +9,7 @@
           @focusout="mobileBrowseOpen = false"
         >
           <div class="links cascade-links">
-            <a class="btn" href="https://github.com/teamresourceful/beehive">
+            <a class="btn" href="https://github.com/team-resourceful/beehive">
               GitHub
             </a>
             <a class="btn" href="https://teamresourceful.com">
@@ -83,7 +83,7 @@
             :options="[
               {
                 id: 'github',
-                link: 'https://github.com/teamresourceful/beehive',
+                link: 'https://github.com/team-resourceful/beehive',
               },
               {
                 id: 'website',
@@ -118,7 +118,7 @@
               Discord
             </template>
           </OverflowMenu>
-          <a class="btn btn-transparent btn-header small-width-hidden" href="https://github.com/teamresourceful/beehive">
+          <a class="btn btn-transparent btn-header small-width-hidden" href="https://github.com/team-resourceful/beehive">
             GitHub
           </a>
           <a class="btn btn-transparent btn-header small-width-hidden" href="https://teamresourceful.com">

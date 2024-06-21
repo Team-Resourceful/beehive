@@ -1,16 +1,10 @@
 <template>
-  <div
-    :class="{
-      'search-page': true,
-      'normal-page': true,
-    }"
-  >
+  <div class="search-page normal-page">
     <Head>
       <Title>Search projects - Beehive</Title>
     </Head>
     <section class="normal-page__header">
       <GameBanner game="minecraft_java"/>
-<!--      <h1 class="type-header">Projects</h1>-->
       <PageBar class="filter-row">
         <span class="page-bar__title">Sort by</span>
         <div class="sort-by-desktop">
@@ -47,7 +41,7 @@
                     action: () => {
                       sortType = x.id
                       onSearchChange(1)
-                    },
+                    }
                   }
                 })
             "

@@ -236,7 +236,7 @@ oldFileTypes.value = version.value.files.map((x) =>
   fileTypes.value.find((y) => y.value === x.file_type)
 )
 
-const title = computed(() => `${version.value.name} - ${props.project.title}`)
+const title = computed(() => `${version.value?.name} - ${props.project.title}`)
 const description = computed(
   () =>
     `Download ${props.project.title} ${

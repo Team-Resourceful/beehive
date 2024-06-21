@@ -667,7 +667,7 @@ function toColor(color) {
 const title = `${project.value.title} - Minecraft Mod`
 const description = `${project.value.description} - Download the Minecraft mod ${
   project.value.title
-} by ${allMembers.value.find((x) => x.role === 'Owner').name} on Beehive`
+} by ${allMembers.value.find((x) => x.role === 'Owner')?.name} on Beehive`
 
 if (!route.name.startsWith('type-id-settings')) {
   useSeoMeta({

@@ -36,7 +36,7 @@
       <p>
         All maven information is gathered from the Team Resourceful maven, you will need to use the repository below to use the maven information
       </p>
-      <CopyCode class="maven-copy" text="https://maven.resourcefulbees.com/repository/maven-public/" />
+      <CopyCode class="maven-copy" text="https://maven.teamresourceful.com/repository/maven-public/" />
     </div>
   </div>
 </template>
