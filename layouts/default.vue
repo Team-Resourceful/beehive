@@ -43,7 +43,7 @@
         </div>
         <div class="mobile-navbar" :class="{ expanded: mobileBrowseOpen || mobileUserOpen }">
           <button
-            class="tab button-animation"
+            class="tab button-animation no-active"
             :class="{ 'router-link-exact-active': mobileBrowseOpen }"
             title="Search"
             @click="toggleBrowseMenu()"
@@ -51,7 +51,13 @@
             <LinkIcon/>
             Links
           </button>
-          <button class="tab button-animation" title="Toggle Mobile Menu"
+          <nuxt-link class="tab" href="/projects">
+            <span>
+              <BeeHiveOutline/>
+              Home
+            </span>
+          </nuxt-link>
+          <button class="tab button-animation no-active" title="Toggle Mobile Menu"
                   @click="toggleMobileMenu()">
             <template v-if="!mobileUserOpen">
               <HamburgerIcon/>
@@ -549,6 +555,7 @@ function toggleBrowseMenu() {
         text-align: center;
         font-size: var(--font-size-sm);
         height: 100%;
+        aspect-ratio: 1/1;
 
         &.browse {
           svg {
@@ -588,15 +595,6 @@ function toggleBrowseMenu() {
           }
 
           color: var(--color-brand);
-
-          &::before {
-            content: '';
-            inset: 0.25rem;
-            position: absolute;
-            background-color: var(--color-brand-highlight);
-            z-index: -1;
-            border-radius: 1rem;
-          }
         }
       }
     }

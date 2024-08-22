@@ -344,10 +344,10 @@ svg.inline-svg {
   background-color: aliceblue !important;
 }
 
-.markdown-body a:focus-visible,.markdown-body a:hover img:only-child {
+.markdown-body a:focus-visible,.markdown-body a:hover:has(img:only-child) {
   filter: none !important;
 }
 
-.markdown-body a:active img:only-child {
+.markdown-body a:active:has(img:only-child) {
   filter: none !important;
 }
