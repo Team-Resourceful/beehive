@@ -69,8 +69,8 @@
       </div>
       <div>
         <Button @click="() => {
-          editingMember = member
-          editMemberModal.show()
+          editingLink = link
+          editLinkModal.show()
         }">
           <EditIcon/>
           Edit
@@ -105,7 +105,7 @@ defineProps({
 })
 
 const updateLinks = (links) => {
-  fetch(`http://localhost:9000/panel/projects/${route.params.id}`, {
+  fetch(`https://beehive-api.teamresourceful.com/panel/projects/${route.params.id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

@@ -5,7 +5,7 @@
       <div class="adjacent-input small">
         <label for="advanced-rendering">
           <span class="label__title">Developer Mode</span>
-          <span class="label__description">Will show developer things</span>
+          <span class="label__description">Will show developer things, do not turn on unless you know what you're doing.</span>
         </label>
         <input
           id="developer-mode"

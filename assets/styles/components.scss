@@ -329,3 +329,17 @@ svg.inline-svg {
 .joined-buttons {
   height: fit-content;
 }
+
+.stylized-toggle {
+  border-radius: var(--radius-sm) !important;
+  background-color: var(--color-tag-bg);
+}
+
+.stylized-toggle:checked {
+  background-color: #48bf53;
+}
+
+.stylized-toggle:after {
+  border-radius: var(--radius-xs) !important;
+  background-color: aliceblue !important;
+}

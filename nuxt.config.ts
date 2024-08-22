@@ -309,7 +309,7 @@ function getDomain() {
       // @ts-ignore
       return process.env.CF_PAGES_URL ?? globalThis.CF_PAGES_URL
     } else {
-      return 'https://beehive.resourceful.team'
+      return 'https://beehive.teamresourceful.com'
     }
   } else {
     return 'http://localhost:3000'

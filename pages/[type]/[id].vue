@@ -157,12 +157,7 @@
         </div>
       </div>
     </Modal>
-    <div
-      :class="{
-        'normal-page': true,
-        'alt-layout': $route.name.startsWith('type-id-settings'),
-      }"
-    >
+    <div class="normal-page">
       <div class="normal-page__header">
         <div class="breadcrumbs">
           <span>Minecraft: Java Edition</span>
@@ -379,9 +374,17 @@
               <ShareIcon />
               Share
             </Button>
+            <nuxt-link
+              v-if="cosmetics.developerMode"
+              :to="`/panel/${route.params.id}`"
+              class="dev-button"
+            >
+              <WrenchIcon />
+            </nuxt-link>
+
           </div>
         </div>
-        <div v-if="project.links.length > 0" class="members card">
+        <div v-if="project.links.length > 0" class="card">
           <h2>Links</h2>
           <div class="links">
             <CustomLink
@@ -393,7 +396,7 @@
             />
           </div>
         </div>
-        <div class="members card">
+        <div class="card">
           <h2>Members</h2>
           <a
             v-for="member in allMembers"
@@ -451,9 +454,11 @@ import WrenchIcon from '~/assets/images/utils/wrench.svg'
 import GameIcon from '~/assets/images/utils/game.svg'
 import { computeVersions } from '~/helpers/projects'
 import CustomLink from '~/components/ui/CustomLink.vue'
+import {useCosmetics} from "~/composables/cosmetics";
 
 const route = useRoute()
 const config = useRuntimeConfig()
+const cosmetics = useCosmetics()
 
 const tags = useTags()
 const vintl = useVIntl()
@@ -475,7 +480,7 @@ try {
   ;[{ data: project }, { data: allMembers }, { data: versions }] = await Promise.all([
     useAsyncData(
       `project/${route.params.id}`,
-      () => $fetch(`http://localhost:9000/projects/${route.params.id}`),
+      () => $fetch(`https://beehive-api.teamresourceful.com/projects/${route.params.id}`),
       {
         transform: (project) => {
           if (project) {
@@ -491,10 +496,10 @@ try {
       }
     ),
     useAsyncData(`project/${route.params.id}/members`, () =>
-      $fetch(`http://localhost:9000/teams/${route.params.id}`)
+      $fetch(`https://beehive-api.teamresourceful.com/teams/${route.params.id}`)
     ),
     useAsyncData(`project/${route.params.id}/version`, () =>
-      $fetch(`http://localhost:9000/versions/${route.params.id}`)
+      $fetch(`https://beehive-api.teamresourceful.com/versions/${route.params.id}`)
     ),
   ])
 
@@ -713,6 +718,20 @@ const moreVersions = computed(() => {
 })
 </script>
 <style lang="scss" scoped>
+.dev-button {
+  background-color: var(--color-button-bg);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+}
+
 .card {
   padding: 1.25rem;
 

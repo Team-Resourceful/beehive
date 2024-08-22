@@ -52,7 +52,7 @@ try {
   ;[{data: project}, {data: allMembers}, {data: versions}] = await Promise.all([
     useAsyncData(
       `project/${route.params.id}`,
-      () => $fetch(`http://localhost:9000/projects/${route.params.id}`),
+      () => $fetch(`https://beehive-api.teamresourceful.com/projects/${route.params.id}`),
       {
         transform: (project) => {
           if (project) {
@@ -68,10 +68,10 @@ try {
       }
     ),
     useAsyncData(`project/${route.params.id}/members`, () =>
-      $fetch(`http://localhost:9000/teams/${route.params.id}`)
+      $fetch(`https://beehive-api.teamresourceful.com/teams/${route.params.id}`)
     ),
     useAsyncData(`project/${route.params.id}/version`, () =>
-      $fetch(`http://localhost:9000/versions/${route.params.id}`)
+      $fetch(`https://beehive-api.teamresourceful.com/versions/${route.params.id}`)
     ),
   ])
 

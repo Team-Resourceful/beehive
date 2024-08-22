@@ -323,7 +323,7 @@ const {
       }
     }
 
-    return `http://localhost:9000/${url}`
+    return `https://beehive-api.teamresourceful.com/${url}`
   },
   {
     transform: (hits) => {
@@ -340,7 +340,7 @@ const pageCount = computed(() =>
 
 const {data: statistics} = await useAsyncData(
   `statistics`,
-  () => $fetch(`http://localhost:9000/statistics`)
+  () => $fetch(`https://beehive-api.teamresourceful.com/statistics`)
 )
 
 function onSearchChange(newPageNumber) {
