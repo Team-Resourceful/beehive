@@ -173,24 +173,18 @@
         <div class="link-info">
           <div class="links">
             <h4 aria-hidden="true">Resources</h4>
-            <a rel="noopener" :target="external()" href="https://example.com">Resources</a>
-            <a rel="noopener" :target="external()" href="https://example.com">Resources</a>
-            <a rel="noopener" :target="external()" href="https://example.com">Resources</a>
-            <a rel="noopener" :target="external()" href="https://example.com">Resources</a>
+            <a rel="noopener" :target="external()" href="https://github.com/Team-Resourceful/beehive">Sources & Issues</a>
+            <a rel="noopener" :target="external()" href="https://teamresourceful.com">Blog</a>
           </div>
           <div class="links">
             <h4 aria-hidden="true">Socials</h4>
-            <a rel="noopener" :target="external()" href="https://example.com">Socials</a>
-            <a rel="noopener" :target="external()" href="https://example.com">Socials</a>
-            <a rel="noopener" :target="external()" href="https://example.com">Socials</a>
-            <a rel="noopener" :target="external()" href="https://example.com">Socials</a>
+            <a rel="noopener" :target="external()" href="https://floss.social/@teamresourceful">Mastodon</a>
+            <a rel="noopener" :target="external()" href="https://twitter.com/TeamResourceful">Twitter</a>
           </div>
           <div class="links">
             <h4 aria-hidden="true">Contact</h4>
-            <a rel="noopener" :target="external()" href="https://example.com">Contact</a>
-            <a rel="noopener" :target="external()" href="https://example.com">Contact</a>
-            <a rel="noopener" :target="external()" href="https://example.com">Contact</a>
-            <a rel="noopener" :target="external()" href="https://example.com">Contact</a>
+            <a rel="noopener" :target="external()" href="https://discord.gg/resourcefulbees">Discord</a>
+            <a rel="noopener" :target="external()" href="mailto:admin@resourcefulbees.com">Email</a>
           </div>
         </div>
       </footer>

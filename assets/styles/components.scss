@@ -343,3 +343,11 @@ svg.inline-svg {
   border-radius: var(--radius-xs) !important;
   background-color: aliceblue !important;
 }
+
+.markdown-body a:focus-visible,.markdown-body a:hover img:only-child {
+  filter: none !important;
+}
+
+.markdown-body a:active img:only-child {
+  filter: none !important;
+}
