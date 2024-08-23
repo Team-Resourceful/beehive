@@ -186,7 +186,7 @@
           role="list"
           aria-label="Search results"
         >
-          <ProjectCard
+          <ProjectCardV2
             v-for="result in results?.hits"
             :id="result.slug"
             :key="result.slug"
@@ -229,7 +229,8 @@ import {
   Button,
   DownloadIcon,
   DropdownIcon,
-  FileIcon, formatBytes,
+  FileIcon,
+  formatBytes,
   formatNumber,
   GridIcon,
   HeartIcon,
@@ -238,7 +239,6 @@ import {
   OverflowMenu,
   PageBar,
   Pagination,
-  ProjectCard,
   ScaleIcon,
   SearchIcon,
   UnknownIcon,
@@ -248,6 +248,7 @@ import TopIcon from 'assets/images/utils/arrow-big-up-dash.svg'
 import NewIcon from 'assets/images/utils/burst.svg'
 import FrownIcon from 'assets/images/utils/frown.svg'
 import GameBanner from '~/components/ui/GameBanner.vue'
+import ProjectCardV2 from "~/components/ui/ProjectCardV2.vue";
 
 const MAX_RESULTS = 20
 

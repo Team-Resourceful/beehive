@@ -61,6 +61,11 @@ export default defineNuxtConfig({
           href: '/favicon.ico'
         },
       ],
+      meta: [
+        {
+          'name': 'darkreader-lock'
+        }
+      ]
     },
   },
   vite: {
