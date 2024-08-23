@@ -318,6 +318,11 @@ defineProps({
   align-items: baseline;
   white-space: nowrap;
   overflow: hidden;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .name {
