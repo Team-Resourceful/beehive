@@ -56,7 +56,7 @@
     </div>
 <!--    TODO FIX THIS PAGINATION AS OMORPHIA DOESNT HAVE SPECIAL CASES FOR ALL PAGES-->
     <div class="version-pagination">
-      <Pagination
+      <PaginationV2
         :page="currentPage"
         :count="Math.ceil(filteredVersions.length / 20)"
         class="pagination-before"
@@ -75,9 +75,9 @@ import {
   formatCategory,
   formatNumber,
   formatVersions,
-  Pagination,
 } from 'omorphia'
 import VersionFilterControl from '~/components/ui/VersionFilterControl.vue'
+import PaginationV2 from "~/components/ui/PaginationV2.vue";
 
 const props = defineProps({
   project: {

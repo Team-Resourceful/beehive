@@ -160,7 +160,7 @@
     <div class="normal-page">
       <div class="normal-page__header">
         <div class="breadcrumbs">
-          <span>Minecraft: Java Edition</span>
+          <nuxt-link :to="`/projects`">Minecraft: Java Edition</nuxt-link>
           <ChevronRightIcon />
           <nuxt-link :to="`/projects`">Projects</nuxt-link>
           <ChevronRightIcon />
@@ -1300,6 +1300,12 @@ const moreVersions = computed(() => {
     flex-direction: row;
     gap: 0.25rem;
     justify-content: center;
+    align-content: center;
+
+    span {
+      display: flex;
+      align-items: center;
+    }
 
     .label {
       color: var(--color-secondary);

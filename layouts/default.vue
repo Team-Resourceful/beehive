@@ -180,7 +180,7 @@
           <div class="links">
             <h4 aria-hidden="true">Resources</h4>
             <a rel="noopener" :target="external()" href="https://github.com/Team-Resourceful/beehive">Sources & Issues</a>
-            <a rel="noopener" :target="external()" href="https://teamresourceful.com">Blog</a>
+            <a rel="noopener" :target="external()" href="https://teamresourceful.com/blogs">Blog</a>
           </div>
           <div class="links">
             <h4 aria-hidden="true">Socials</h4>
@@ -332,7 +332,7 @@ function toggleBrowseMenu() {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
 
-    .small-width-displayed {
+    .popup-container:has(.small-width-displayed) {
       display: none;
     }
 
@@ -344,7 +344,7 @@ function toggleBrowseMenu() {
     }
 
     @media screen and (max-width: 1250px) {
-      .small-width-displayed {
+      .popup-container:has(.small-width-displayed) {
         display: flex;
       }
 

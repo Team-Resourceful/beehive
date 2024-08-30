@@ -351,3 +351,7 @@ svg.inline-svg {
 .markdown-body a:active:has(img:only-child) {
   filter: none !important;
 }
+
+.btn.btn-transparent {
+  fill: var(--_accent-color);
+}
