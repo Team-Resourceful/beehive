@@ -97,7 +97,7 @@ defineProps({
 })
 
 const updateProject = (project) => {
-  fetch(`https://beehive-api.teamresourceful.com/panel/projects/${route.params.id}`, {
+  fetch(`https://api.beehive.sh/panel/projects/${route.params.id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

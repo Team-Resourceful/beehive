@@ -324,7 +324,7 @@ const {
       }
     }
 
-    return `https://beehive-api.teamresourceful.com/${url}`
+    return `https://api.beehive.sh/${url}`
   },
   {
     transform: (hits) => {
@@ -341,7 +341,7 @@ const pageCount = computed(() =>
 
 const {data: statistics} = await useAsyncData(
   `statistics`,
-  () => $fetch(`https://beehive-api.teamresourceful.com/statistics`)
+  () => $fetch(`https://api.beehive.sh/statistics`)
 )
 
 function onSearchChange(newPageNumber) {
